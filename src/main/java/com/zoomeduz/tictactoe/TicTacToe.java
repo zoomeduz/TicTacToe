@@ -61,7 +61,7 @@ public class TicTacToe {
             computerMark = MARK_X;
             move = Move.COMPUTER;
         }
-        Field field = new Field();
+        Field3x3 field = new Field3x3();
 
         System.out.println("Сетка игры выглядит следующим образом. \nПросьба указывать номер поля, куда хотите сделать свой ход.\n");
         field.displayFieldWithSubfieldNumbers();
@@ -70,7 +70,7 @@ public class TicTacToe {
         AI computer = new AI(FIELD_SIZE, FIELD_SIZE, 3, MARK_X, MARK_O);
         
         field.displayCurrentField();
-        while(!hasWin && field.getNumberOfEmptyFields() != 0) {
+        while(!hasWin && field.getCurrentNumberOfEmptyFields() != 0) {
             switch(move) {
                 case PLAYER:
                     System.out.println("Ваш ход (1-9, 0 - показать номера полей)\n");
@@ -122,34 +122,50 @@ public class TicTacToe {
     }
 }
 
-class Field {
+class Field3x3 {
     
-    private static final int DEFAULT_NUMBER_OF_FIELDS = 9;
-    private static final char DEFAULT_EMPTY_VALUE = ' ';
-    private int numberOfEmptyFields;
+    private static final int NUMBER_OF_FIELDS = 9;
+    private static final char EMPTY_VALUE = ' ';
+    private int currentNumberOfEmptyFields;
     private char[] simpleField;
     
-    Field() {
-        numberOfEmptyFields = DEFAULT_NUMBER_OF_FIELDS;
-        simpleField = new char[DEFAULT_NUMBER_OF_FIELDS];
+    Field3x3() {
+        currentNumberOfEmptyFields = NUMBER_OF_FIELDS;
+        simpleField = new char[NUMBER_OF_FIELDS];
 
         for (int i = 0; i < simpleField.length; i++) {
-            simpleField[i] = DEFAULT_EMPTY_VALUE;
+            simpleField[i] = EMPTY_VALUE;
         }
     }
     
-    int getNumberOfEmptyFields() {
-        return numberOfEmptyFields;
+    int getCurrentNumberOfEmptyFields() {
+        return currentNumberOfEmptyFields;
     }
     
     char[] getCurrentField() {
         return simpleField;
     }
     
+    // Фукнция, которая в консоль выводит отображение текущего вида поля.
+    // Формат вывода -- как в функции displayFieldWithSubfieldNumbers():
+    //      |     |     
+    //   1  |  2  |  3  
+    // _____|_____|_____
+    //      |     |     
+    //   4  |  5  |  6  
+    // _____|_____|_____
+    //      |     |     
+    //   7  |  8  |  9  
+    //      |     |     
+    //
+    // где вместо цифр будет отображено либо заполненное значение, либо пусто
     void displayCurrentField() {
         int k = 0;
-        for (int i = 0; i < 9; i++) { //убрать магические числа
-            for (int j = 0; j < 17; j++) { //убрать магические числа
+        int numberOfDisplayedRows = 9;
+        int numberOfDisplayedColumns = 17;
+
+        for (int i = 0; i < numberOfDisplayedRows; i++) {
+            for (int j = 0; j < numberOfDisplayedColumns; j++) {
                 if (i % 3 == 1 && j % 6 == 2)
                     System.out.print(simpleField[k++]);
                 else if (j == 5 || j == 11)
@@ -165,6 +181,7 @@ class Field {
     }
 
     void displayFieldWithSubfieldNumbers() {
+        //оставлен такой вывод, для наглядности
         System.out.println("     |     |     ");
         System.out.println("  1  |  2  |  3  ");
         System.out.println("_____|_____|_____");
@@ -180,14 +197,14 @@ class Field {
     void fillInSubfield(int subfieldNumber, char mark) throws SubfieldNumberInvalidException {
         subfieldNumber--; //-1 т.к. в массиве от 0 индексы
         try {
-            if (simpleField[subfieldNumber] != DEFAULT_EMPTY_VALUE){
+            if (simpleField[subfieldNumber] != EMPTY_VALUE){
                 throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
             }
             simpleField[subfieldNumber] = mark;
         } catch(Exception e) {
             throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
         }
-        numberOfEmptyFields--;
+        currentNumberOfEmptyFields--;
     }
 }
 
