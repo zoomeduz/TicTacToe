@@ -14,15 +14,24 @@ public class TicTacToe {
     public static final int FIELD_SIZE = 3;
 
     static enum Move {
-        PLAYER, COMPUTER
+        PLAYER, COMPUTER;
+        
+        @Override
+        public String toString() {
+            switch(this) {
+                case PLAYER:    return "Вы";
+                case COMPUTER:  return "Компьютер";
+                default:        return "Не определено";
+            }
+        }
     };
 
     static Move changeMove(Move move) {
         switch(move) {
-            case PLAYER: return Move.COMPUTER;
-            case COMPUTER: return Move.PLAYER;
+            case PLAYER:    return Move.COMPUTER;
+            case COMPUTER:  return Move.PLAYER;
+            default:        return null;
         }
-        return null;
     }
 
     public static void main(String[] args){
