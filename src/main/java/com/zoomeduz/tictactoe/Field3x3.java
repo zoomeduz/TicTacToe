@@ -40,7 +40,7 @@ class Field3x3 {
     //      |     |
     //
     // где вместо цифр будет отображено либо заполненное значение, либо пусто
-    void displayCurrentField() {
+    void displayCurrentField() { //перенести в ConsoleIO
         int k = 0;
         int numberOfDisplayedRows = 9;
         int numberOfDisplayedColumns = 17;
@@ -61,7 +61,7 @@ class Field3x3 {
         System.out.println(" ");
     }
 
-    void displayFieldWithSubfieldNumbers() {
+    void displayFieldWithSubfieldNumbers() { //перенести в ConsoleIO
         //оставлен такой вывод, для наглядности
         System.out.println("     |     |     ");
         System.out.println("  1  |  2  |  3  ");
@@ -86,6 +86,5 @@ class Field3x3 {
             throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
         }
         currentNumberOfEmptyFields--;
-    }
-    
+    }   
 }

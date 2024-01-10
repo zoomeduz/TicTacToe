@@ -1,7 +1,5 @@
 package com.zoomeduz.tictactoe;
 
-import java.util.*;
-
 /*
  * Tic Tac Toe game
  *
@@ -42,38 +40,36 @@ public class TicTacToe {
         Move move;
         Move winner = null;
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Давайте сыграем в 'Крестики-нолики'!");
+        IO io = new ConsoleIO();
+        io.outputText("Давайте сыграем в 'Крестики-нолики'!");
         while(true) {
-            System.out.println("Каким знаком будете играть? (" + MARK_X + " или " + MARK_O + ")");
             try {
-                inputEnteredByPlayer = in.nextLine();
-                System.out.println("");
+                inputEnteredByPlayer = io.getUserString("Каким знаком будете играть? (" + MARK_X + " или " + MARK_O + ")");
+                io.outputText("");
             } catch(Exception e) {
-                System.out.println("Некорректный знак! Нужно выбрать либо '" + MARK_X + "' либо '" + MARK_O + "'.\n" + e + "\n");
-                in.next();
+                io.outputText("Некорректный знак! Нужно выбрать либо '" + MARK_X + "' либо '" + MARK_O + "'.\n" + e + "\n");
                 continue;
             }
             if (!inputEnteredByPlayer.equalsIgnoreCase(String.valueOf(MARK_X)) && !inputEnteredByPlayer.equalsIgnoreCase(String.valueOf(MARK_O))) {
-                System.out.println("Нужно выбрать либо '" + MARK_X + "' либо '" + MARK_O + "'.");
+                io.outputText("Нужно выбрать либо '" + MARK_X + "' либо '" + MARK_O + "'.");
                 continue;
             }
             playerMark = inputEnteredByPlayer.toUpperCase().charAt(0);
             break;
         }
         if (playerMark == MARK_X) {
-            System.out.println("Первым будете ходить вы.\n");
+            io.outputText("Первым будете ходить вы.\n");
             computerMark = MARK_O;
             move = Move.PLAYER;
         } else {
-            System.out.println("Первым будет ходить компьютер.\n");
+            io.outputText("Первым будет ходить компьютер.\n");
             computerMark = MARK_X;
             move = Move.COMPUTER;
         }
         Field3x3 field = new Field3x3();
 
-        System.out.println("Сетка игры выглядит следующим образом. \nПросьба указывать номер поля, куда хотите сделать свой ход.\n");
-        field.displayFieldWithSubfieldNumbers();
+        io.outputText("Сетка игры выглядит следующим образом. \nПросьба указывать номер поля, куда хотите сделать свой ход.\n");
+        field.displayFieldWithSubfieldNumbers(); //надо заменить на ConsoleIO метод
 
         boolean hasWin = false;
         AI computer = new AI(FIELD_SIZE, FIELD_SIZE, 3, MARK_X, MARK_O);
@@ -82,37 +78,35 @@ public class TicTacToe {
         while(!hasWin && field.getCurrentNumberOfEmptyFields() != 0) {
             switch(move) {
                 case PLAYER:
-                    System.out.println("Ваш ход (1-9, 0 - показать номера полей)\n");
                     try {
-                        subfieldNumber = in.nextInt();
-                        System.out.println("");
+                        subfieldNumber = io.getUserInt("Ваш ход (1-9, 0 - показать номера полей)\n");
+                        io.outputText("");
                     } catch(Exception e) {
-                        System.out.println("Некорректный знак! Нужно выбрать либо номер поля от 1 до 9.\n" + e + "\n");
-                        in.next();
+                        io.outputText("Некорректный знак! Нужно выбрать либо номер поля от 1 до 9.\n" + e + "\n");
                         continue;
                     }
                     if (subfieldNumber == 0) {
-                        field.displayFieldWithSubfieldNumbers();
+                        field.displayFieldWithSubfieldNumbers(); //заменить
                         continue;
                     }
                     try {
                         field.fillInSubfield(subfieldNumber, playerMark);
                     } catch(SubfieldNumberInvalidException e) {
-                        System.out.println(e);
+                        io.outputText(e.toString());
                         continue;
                     }
                     break;
                 case COMPUTER:
-                    System.out.println("Ход противника\n");
+                    io.outputText("Ход противника\n");
                     try {
                         field.fillInSubfield(computer.makeMove(field.getCurrentField()), computerMark);
                     } catch(SubfieldNumberInvalidException e) {
-                        System.out.println(e);
+                        io.outputText(e.toString());
                         break; //тут надо завершать игру, т.к. COMPUTER в неадеквате
                     }
                     break;
             }
-            field.displayCurrentField();
+            field.displayCurrentField(); //заменить
             
             if(computer.hasWin(field.getCurrentField())) {
                 hasWin = true;
@@ -122,12 +116,10 @@ public class TicTacToe {
             }
         }
         if (winner == null) {
-            System.out.println("Ничья!");
+            io.outputText("Ничья!");
         } else {
-            System.out.println("Победитель: " + winner + "!");
+            io.outputText("Победитель: " + winner + "!");
         }
-        
-        in.close();
     }
 }
 
