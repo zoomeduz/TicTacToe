@@ -27,54 +27,6 @@ class Field3x3 {
         return simpleField;
     }
 
-    // Фукнция, которая в консоль выводит отображение текущего вида поля.
-    // Формат вывода -- как в функции displayFieldWithSubfieldNumbers():
-    //      |     |
-    //   1  |  2  |  3
-    // _____|_____|_____
-    //      |     |
-    //   4  |  5  |  6
-    // _____|_____|_____
-    //      |     |
-    //   7  |  8  |  9
-    //      |     |
-    //
-    // где вместо цифр будет отображено либо заполненное значение, либо пусто
-    void displayCurrentField() { //перенести в ConsoleIO
-        int k = 0;
-        int numberOfDisplayedRows = 9;
-        int numberOfDisplayedColumns = 17;
-        for (int i = 0; i < numberOfDisplayedRows; i++) {
-            for (int j = 0; j < numberOfDisplayedColumns; j++) {
-                if (i % 3 == 1 && j % 6 == 2) {
-                    System.out.print(simpleField[k++]);
-                } else if (j == 5 || j == 11) {
-                    System.out.print("|");
-                } else if (i == 2 || i == 5) {
-                    System.out.print("_");
-                } else {
-                    System.out.print(" ");
-                }
-            }
-            System.out.print("\n");
-        }
-        System.out.println(" ");
-    }
-
-    void displayFieldWithSubfieldNumbers() { //перенести в ConsoleIO
-        //оставлен такой вывод, для наглядности
-        System.out.println("     |     |     ");
-        System.out.println("  1  |  2  |  3  ");
-        System.out.println("_____|_____|_____");
-        System.out.println("     |     |     ");
-        System.out.println("  4  |  5  |  6  ");
-        System.out.println("_____|_____|_____");
-        System.out.println("     |     |     ");
-        System.out.println("  7  |  8  |  9  ");
-        System.out.println("     |     |     ");
-        System.out.println("");
-    }
-
     void fillInSubfield(int subfieldNumber, char mark) throws SubfieldNumberInvalidException {
         subfieldNumber--; //-1 т.к. в массиве от 0 индексы
         try {
@@ -87,4 +39,12 @@ class Field3x3 {
         }
         currentNumberOfEmptyFields--;
     }   
+}
+
+class SubfieldNumberInvalidException extends Exception {
+	private static final long serialVersionUID = 4805057172244117284L;
+
+	public SubfieldNumberInvalidException(String message){
+        super(message);
+    }
 }

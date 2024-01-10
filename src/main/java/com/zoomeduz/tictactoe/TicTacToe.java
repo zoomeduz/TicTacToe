@@ -69,12 +69,12 @@ public class TicTacToe {
         Field3x3 field = new Field3x3();
 
         io.outputText("Сетка игры выглядит следующим образом. \nПросьба указывать номер поля, куда хотите сделать свой ход.\n");
-        field.displayFieldWithSubfieldNumbers(); //надо заменить на ConsoleIO метод
+        io.displayFieldWithSubfieldNumbers();
 
         boolean hasWin = false;
         AI computer = new AI(FIELD_SIZE, FIELD_SIZE, 3, MARK_X, MARK_O);
         
-        field.displayCurrentField();
+        io.displayField(field.getCurrentField());
         while(!hasWin && field.getCurrentNumberOfEmptyFields() != 0) {
             switch(move) {
                 case PLAYER:
@@ -86,7 +86,7 @@ public class TicTacToe {
                         continue;
                     }
                     if (subfieldNumber == 0) {
-                        field.displayFieldWithSubfieldNumbers(); //заменить
+                        io.displayFieldWithSubfieldNumbers();
                         continue;
                     }
                     try {
@@ -106,7 +106,7 @@ public class TicTacToe {
                     }
                     break;
             }
-            field.displayCurrentField(); //заменить
+            io.displayField(field.getCurrentField());
             
             if(computer.hasWin(field.getCurrentField())) {
                 hasWin = true;
@@ -120,13 +120,5 @@ public class TicTacToe {
         } else {
             io.outputText("Победитель: " + winner + "!");
         }
-    }
-}
-
-class SubfieldNumberInvalidException extends Exception {
-	private static final long serialVersionUID = 4805057172244117284L;
-
-	public SubfieldNumberInvalidException(String message){
-        super(message);
     }
 }
