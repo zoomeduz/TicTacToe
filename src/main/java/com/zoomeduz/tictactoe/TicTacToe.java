@@ -72,10 +72,10 @@ public class TicTacToe {
         io.displayFieldWithSubfieldNumbers();
 
         boolean hasWin = false;
-        AI computer = new AI(FIELD_SIZE, FIELD_SIZE, 3, MARK_X, MARK_O);
+        Computer computer = new Computer(field, 3, MARK_X, MARK_O);
         
         io.displayField(field.getCurrentField());
-        while(!hasWin && field.getCurrentNumberOfEmptyFields() != 0) {
+        while(!hasWin && field.getCurrentNumberOfEmptySubFields() != 0) {
             switch(move) {
                 case PLAYER:
                     try {

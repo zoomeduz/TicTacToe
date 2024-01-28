@@ -7,7 +7,7 @@ import java.util.Random;
  *
  * @author zoomeduz
  */
-class AI {
+class Computer {
     
     private int numberOfMarksToWin;
     private char mark_X;
@@ -15,10 +15,12 @@ class AI {
     private int numberOfRows;
     private int numberOfColumns;
     private char winnerMark;
+    private char emptyValue;
 
-    AI(int numberOfRows, int numberOfColumns, int numberOfMarksToWin, char mark_X, char mark_O) {
-        this.numberOfRows = numberOfRows;
-        this.numberOfColumns = numberOfColumns;
+    Computer(Field field, int numberOfMarksToWin, char mark_X, char mark_O) {
+        this.numberOfRows = field.getNumberOfRows();
+        this.numberOfColumns = field.getNumberOfColumns();
+        this.emptyValue = field.getEmptyValue();
         this.numberOfMarksToWin = numberOfMarksToWin;
         this.mark_X = mark_X;
         this.mark_O = mark_O;
@@ -29,8 +31,7 @@ class AI {
     int makeMove(char[] field) {
         ArrayList<Integer> emptySubfields = new ArrayList<>();
         for (int i = 0; i < field.length; i++) {
-            if (field[i] == ' ') {
-                //надо отвязаться от этого пробела, либо надо использовать массив строк
+            if (field[i] == emptyValue) {
                 emptySubfields.add(i + 1); //+1 т.к. играем со сзначениями полей от 1 до 9
             }
         }
