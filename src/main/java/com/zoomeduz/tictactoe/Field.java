@@ -8,13 +8,15 @@ interface Field {
     
     int getCurrentNumberOfEmptySubFields();
 
-    char[] getCurrentField();
+    char[][] getCurrentField();
 
     char getEmptyValue();
 
-    void fillInSubfield(int subfieldNumber, char mark) throws SubfieldNumberInvalidException;
+    void fillInSubfield(int rowNumber, int columnNumber, char mark) throws SubfieldNumberInvalidException;
     
     int getNumberOfRows();
     
     int getNumberOfColumns();
+    
+    char getValue(int rowNumber, int columnNumber);
 }

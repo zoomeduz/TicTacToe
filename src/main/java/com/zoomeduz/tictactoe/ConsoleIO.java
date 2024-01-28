@@ -76,14 +76,32 @@ class ConsoleIO implements IO {
     //
     // где вместо цифр будет отображено либо заполненное значение, либо пусто
     @Override
-    public void displayField(char[] field) {
+    public void displayField(Field field) {
+        if (field instanceof Field3x3) {
+            displayField3x3((Field3x3)field);
+        } else {
+            System.out.println("Неподдерживаемый тип поля.");
+        }
+    }
+    
+    private void displayField3x3(Field3x3 field) {
         int k = 0;
+        char[] allValuesFromField = new char[field.getNumberOfColumns()*field.getNumberOfRows()];
+        
+        for (int r = 0; r < field.getNumberOfRows(); r++) {
+            for (int c = 0; c < field.getNumberOfColumns(); c++) {
+                allValuesFromField[k] = field.getValue(r, c);
+                k++;
+            }
+        }
+        
+        k = 0;
         int numberOfDisplayedRows = 9;
         int numberOfDisplayedColumns = 17;
         for (int i = 0; i < numberOfDisplayedRows; i++) {
             for (int j = 0; j < numberOfDisplayedColumns; j++) {
                 if (i % 3 == 1 && j % 6 == 2) {
-                    System.out.print(field[k++]);
+                    System.out.print(allValuesFromField[k++]);
                 } else if (j == 5 || j == 11) {
                     System.out.print("|");
                 } else if (i == 2 || i == 5) {
@@ -94,7 +112,7 @@ class ConsoleIO implements IO {
             }
             System.out.print("\n");
         }
-        System.out.println(" ");
+        System.out.println(" ");    
     }
 
     @Override

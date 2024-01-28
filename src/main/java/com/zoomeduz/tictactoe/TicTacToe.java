@@ -74,7 +74,7 @@ public class TicTacToe {
         boolean hasWin = false;
         Computer computer = new Computer(field, 3, MARK_X, MARK_O);
         
-        io.displayField(field.getCurrentField());
+        io.displayField(field);
         while(!hasWin && field.getCurrentNumberOfEmptySubFields() != 0) {
             switch(move) {
                 case PLAYER:
@@ -90,7 +90,7 @@ public class TicTacToe {
                         continue;
                     }
                     try {
-                        field.fillInSubfield(subfieldNumber, playerMark);
+                        fillInSubfieldInField3x3(field, subfieldNumber, playerMark);
                     } catch(SubfieldNumberInvalidException e) {
                         io.outputText(e.toString());
                         continue;
@@ -99,16 +99,16 @@ public class TicTacToe {
                 case COMPUTER:
                     io.outputText("Ход противника\n");
                     try {
-                        field.fillInSubfield(computer.makeMove(field.getCurrentField()), computerMark);
+                        fillInSubfieldInField3x3(field, computer.makeMove(getLinearRepresentationOfField(field)), computerMark);
                     } catch(SubfieldNumberInvalidException e) {
                         io.outputText(e.toString());
                         break; //тут надо завершать игру, т.к. COMPUTER в неадеквате
                     }
                     break;
             }
-            io.displayField(field.getCurrentField());
+            io.displayField(field);
             
-            if(computer.hasWin(field.getCurrentField())) {
+            if(computer.hasWin(getLinearRepresentationOfField(field))) {
                 hasWin = true;
                 winner = move;
             } else {
@@ -120,5 +120,53 @@ public class TicTacToe {
         } else {
             io.outputText("Победитель: " + winner + "!");
         }
+    }
+    
+    static void fillInSubfieldInField3x3(Field3x3 field, int subfieldNumber, char playerMark) throws SubfieldNumberInvalidException {
+        switch(subfieldNumber) {
+            case 1:
+                field.fillInSubfield(0, 0, playerMark);
+                return;
+            case 2:
+                field.fillInSubfield(0, 1, playerMark);
+                return;
+            case 3:
+                field.fillInSubfield(0, 2, playerMark);
+                return;
+            case 4:
+                field.fillInSubfield(1, 0, playerMark);
+                return;
+            case 5:
+                field.fillInSubfield(1, 1, playerMark);
+                return;
+            case 6:
+                field.fillInSubfield(1, 2, playerMark);
+                return;
+            case 7:
+                field.fillInSubfield(2, 0, playerMark);
+                return;
+            case 8:
+                field.fillInSubfield(2, 1, playerMark);
+                return;
+            case 9:
+                field.fillInSubfield(2, 2, playerMark);
+                return;
+            default:
+                throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
+        }
+    }
+    
+    //временное решение
+    static char[] getLinearRepresentationOfField(Field field) {
+        int k = 0;
+        char[] linearRepresentation = new char[field.getNumberOfColumns()*field.getNumberOfRows()];
+        
+        for (int r = 0; r < field.getNumberOfRows(); r++) {
+            for (int c = 0; c < field.getNumberOfColumns(); c++) {
+                linearRepresentation[k] = field.getValue(r, c);
+                k++;
+            }
+        }
+        return linearRepresentation;
     }
 }

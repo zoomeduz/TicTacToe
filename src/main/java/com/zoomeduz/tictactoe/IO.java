@@ -16,7 +16,7 @@ public interface IO {
 	
 	String getUserString(String textDescription);
     
-    void displayField(char[] field);
+    void displayField(Field field);
     
     void displayFieldWithSubfieldNumbers();
 }

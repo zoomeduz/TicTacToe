@@ -6,18 +6,19 @@ package com.zoomeduz.tictactoe;
  */
 class Field3x3 implements Field {
     
-    private static final int NUMBER_OF_FIELDS = 9;
     private static final int NUMBER_OF_ROWS = 3;
     private static final int NUMBER_OF_COLUMNS = 3;
     private static final char EMPTY_VALUE = ' ';
     private int currentNumberOfEmptyFields;
-    private char[] simpleField;
+    private char[][] simpleField;
 
     Field3x3() {
-        currentNumberOfEmptyFields = NUMBER_OF_FIELDS;
-        simpleField = new char[NUMBER_OF_FIELDS];
-        for (int i = 0; i < simpleField.length; i++) {
-            simpleField[i] = EMPTY_VALUE;
+        currentNumberOfEmptyFields = NUMBER_OF_COLUMNS*NUMBER_OF_ROWS;
+        simpleField = new char[NUMBER_OF_COLUMNS][NUMBER_OF_ROWS];
+        for (int r = 0; r < NUMBER_OF_ROWS; r++) {
+            for (int c = 0; c < NUMBER_OF_COLUMNS; c++) {
+                simpleField[r][c] = EMPTY_VALUE;
+            }
         }
     }
 
@@ -27,7 +28,7 @@ class Field3x3 implements Field {
     }
 
     @Override
-    public char[] getCurrentField() {
+    public char[][] getCurrentField() {
         return simpleField;
     }
     
@@ -37,15 +38,11 @@ class Field3x3 implements Field {
     }
 
     @Override
-    public void fillInSubfield(int subfieldNumber, char mark) throws SubfieldNumberInvalidException {
-        subfieldNumber--; //-1 т.к. в массиве от 0 индексы
-        if (subfieldNumber < 0 || subfieldNumber >= NUMBER_OF_FIELDS) {
+    public void fillInSubfield(int rowNumber, int columnNumber, char mark) throws SubfieldNumberInvalidException {
+        if (simpleField[rowNumber][columnNumber] != EMPTY_VALUE) {
             throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
         }
-        if (simpleField[subfieldNumber] != EMPTY_VALUE) {
-            throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
-        }
-        simpleField[subfieldNumber] = mark;
+        simpleField[rowNumber][columnNumber] = mark;
         currentNumberOfEmptyFields--;
     }
     
@@ -57,6 +54,11 @@ class Field3x3 implements Field {
     @Override
     public int getNumberOfColumns() {
         return NUMBER_OF_COLUMNS;
+    }
+    
+    @Override
+    public char getValue(int rowNumber, int columnNumber) {
+        return simpleField[rowNumber][columnNumber];
     }
 }
 
