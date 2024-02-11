@@ -11,10 +11,13 @@ class Field3x3 implements Field {
     private static final char EMPTY_VALUE = ' ';
     private int currentNumberOfEmptyFields;
     private char[][] simpleField;
+    private CellPosition lastFilledSubfield;
 
     Field3x3() {
         currentNumberOfEmptyFields = NUMBER_OF_COLUMNS*NUMBER_OF_ROWS;
         simpleField = new char[NUMBER_OF_COLUMNS][NUMBER_OF_ROWS];
+        lastFilledSubfield = null;
+
         for (int r = 0; r < NUMBER_OF_ROWS; r++) {
             for (int c = 0; c < NUMBER_OF_COLUMNS; c++) {
                 simpleField[r][c] = EMPTY_VALUE;
@@ -44,6 +47,7 @@ class Field3x3 implements Field {
         }
         simpleField[rowNumber][columnNumber] = mark;
         currentNumberOfEmptyFields--;
+        lastFilledSubfield = new CellPosition(rowNumber, columnNumber);
     }
     
     @Override
@@ -59,6 +63,11 @@ class Field3x3 implements Field {
     @Override
     public char getValue(int rowNumber, int columnNumber) {
         return simpleField[rowNumber][columnNumber];
+    }
+    
+    @Override
+    public CellPosition getLastFilledSubfield() {
+        return lastFilledSubfield;
     }
 }
 

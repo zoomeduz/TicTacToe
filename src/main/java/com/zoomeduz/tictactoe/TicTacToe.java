@@ -10,6 +10,7 @@ public class TicTacToe {
     public static final char MARK_X = 'X';
     public static final char MARK_O = 'O';
     public static final int FIELD_SIZE = 3;
+    public static final int WINNING_COMBINATION_LENGTH = 3;
 
     static enum Move {
         PLAYER, COMPUTER;
@@ -72,7 +73,6 @@ public class TicTacToe {
         io.displayFieldWithSubfieldNumbers();
 
         boolean hasWin = false;
-        Computer computer = new Computer(field, 3, MARK_X, MARK_O);
         
         io.displayField(field);
         while(!hasWin && field.getCurrentNumberOfEmptySubFields() != 0) {
@@ -99,7 +99,8 @@ public class TicTacToe {
                 case COMPUTER:
                     io.outputText("Ход противника\n");
                     try {
-                        fillInSubfieldInField3x3(field, computer.makeMove(getLinearRepresentationOfField(field)), computerMark);
+                        CellPosition position = Mover.makeMove(field);
+                        fillInSubfieldInField3x3(field, position.getCellPositionNumber(field.getNumberOfColumns()), computerMark);
                     } catch(SubfieldNumberInvalidException e) {
                         io.outputText(e.toString());
                         break; //тут надо завершать игру, т.к. COMPUTER в неадеквате
@@ -108,7 +109,7 @@ public class TicTacToe {
             }
             io.displayField(field);
             
-            if(computer.hasWin(getLinearRepresentationOfField(field))) {
+            if(Referee.hasWin(field, WINNING_COMBINATION_LENGTH)) {
                 hasWin = true;
                 winner = move;
             } else {
@@ -156,17 +157,4 @@ public class TicTacToe {
         }
     }
     
-    //временное решение
-    static char[] getLinearRepresentationOfField(Field field) {
-        int k = 0;
-        char[] linearRepresentation = new char[field.getNumberOfColumns()*field.getNumberOfRows()];
-        
-        for (int r = 0; r < field.getNumberOfRows(); r++) {
-            for (int c = 0; c < field.getNumberOfColumns(); c++) {
-                linearRepresentation[k] = field.getValue(r, c);
-                k++;
-            }
-        }
-        return linearRepresentation;
-    }
 }

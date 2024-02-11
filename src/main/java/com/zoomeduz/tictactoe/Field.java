@@ -4,6 +4,8 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
+
+//может стоит использовать CellPosition вместо  rowNumber и columnNumber?
 interface Field {
     
     int getCurrentNumberOfEmptySubFields();
@@ -19,4 +21,6 @@ interface Field {
     int getNumberOfColumns();
     
     char getValue(int rowNumber, int columnNumber);
+    
+    CellPosition getLastFilledSubfield();
 }
