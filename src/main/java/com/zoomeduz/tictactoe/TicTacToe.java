@@ -90,8 +90,9 @@ public class TicTacToe {
                         continue;
                     }
                     try {
-                        fillInSubfieldInField3x3(field, subfieldNumber, playerMark);
-                    } catch(SubfieldNumberInvalidException e) {
+                        field.fillInSubfield(getCellPositionByNumber(subfieldNumber, field.getNumberOfRows(), field.getNumberOfColumns())
+                                           , playerMark);
+                    } catch(SubfieldNumberInvalidException | CellNumberInvalidException e) {
                         io.outputText(e.toString());
                         continue;
                     }
@@ -100,7 +101,7 @@ public class TicTacToe {
                     io.outputText("Ход противника\n");
                     try {
                         CellPosition position = Mover.makeMove(field);
-                        fillInSubfieldInField3x3(field, position.getCellPositionNumber(field.getNumberOfColumns()), computerMark);
+                        field.fillInSubfield(position, computerMark);
                     } catch(SubfieldNumberInvalidException e) {
                         io.outputText(e.toString());
                         break; //тут надо завершать игру, т.к. COMPUTER в неадеквате
@@ -123,38 +124,30 @@ public class TicTacToe {
         }
     }
     
-    static void fillInSubfieldInField3x3(Field3x3 field, int subfieldNumber, char playerMark) throws SubfieldNumberInvalidException {
-        switch(subfieldNumber) {
-            case 1:
-                field.fillInSubfield(new CellPosition(0, 0), playerMark);
-                return;
-            case 2:
-                field.fillInSubfield(new CellPosition(0, 1), playerMark);
-                return;
-            case 3:
-                field.fillInSubfield(new CellPosition(0, 2), playerMark);
-                return;
-            case 4:
-                field.fillInSubfield(new CellPosition(1, 0), playerMark);
-                return;
-            case 5:
-                field.fillInSubfield(new CellPosition(1, 1), playerMark);
-                return;
-            case 6:
-                field.fillInSubfield(new CellPosition(1, 2), playerMark);
-                return;
-            case 7:
-                field.fillInSubfield(new CellPosition(2, 0), playerMark);
-                return;
-            case 8:
-                field.fillInSubfield(new CellPosition(2, 1), playerMark);
-                return;
-            case 9:
-                field.fillInSubfield(new CellPosition(2, 2), playerMark);
-                return;
-            default:
-                throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
+    //cell number: 1..N
+    static CellPosition getCellPositionByNumber(int cellNumber, int numberOfRows, int numberOfColumns) throws CellNumberInvalidException {
+        if (cellNumber < 1) {
+            throw new CellNumberInvalidException("Номером ячейки может быть только натуральное число от 1 до N");
         }
+        int countCell = 0;
+        
+        for (int r = 0; r < numberOfRows; r++) {
+            for (int c = 0; c < numberOfColumns; c++) {
+                countCell++;
+                if (countCell == cellNumber) {
+                    return new CellPosition(r, c);
+                }
+            }
+        }
+
+        throw new CellNumberInvalidException("Для заданных numberOfRows и numberOfColumns не может быть такого cellNumber");
     }
     
+}
+
+class CellNumberInvalidException extends Exception{
+
+	public CellNumberInvalidException(String message){
+        super(message);
+    }
 }
