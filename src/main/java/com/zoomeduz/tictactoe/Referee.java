@@ -14,7 +14,6 @@ class Referee {
         int numberOfColumns = field.getNumberOfColumns();
         CellPosition refPosition = field.getLastFilledSubfield();
         char mark = field.getValue(refPosition.row, refPosition.column);
-        char winnerMark = ' ';
         resetMarkCount(); //типа init
         
         //проверка строки вправо от refPosition
@@ -27,6 +26,7 @@ class Referee {
             }
             
             if (markCount == winningCombinationLength) {
+                winnerMark = mark;
                 return true;
             }
         }
@@ -41,6 +41,7 @@ class Referee {
             }
             
             if (markCount == winningCombinationLength) {
+                winnerMark = mark;
                 return true;
             }
         }
@@ -58,6 +59,7 @@ class Referee {
             }
             
             if (markCount == winningCombinationLength) {
+                winnerMark = mark;
                 return true;
             }
         }
@@ -72,6 +74,7 @@ class Referee {
             }
             
             if (markCount == winningCombinationLength) {
+                winnerMark = mark;
                 return true;
             }
         }
@@ -80,38 +83,32 @@ class Referee {
         resetMarkCount();
         
         //проверка диагонали: \ вниз и вправо от refPosition
-        checkDiagonalDR:
-        for(int r = refPosition.row+1; r < numberOfRows; r++) {
-            for (int c = refPosition.column+1; c < numberOfColumns; c++) {
-                //System.out.println("Проверка (" + r + ", " + c + "): " + field.getValue(r, c) + " счет: " + markCount);
-                if(field.getValue(r, c) == mark) {
-                    markCount++;
-                } else {
-                    resetMarkCount();
-                    break checkDiagonalDR;
-                }
+        for(int r = refPosition.row+1, c = refPosition.column+1; r < numberOfRows && c < numberOfColumns; r++, c++) {
+            if(field.getValue(r, c) == mark) {
+                markCount++;
+            } else {
+                resetMarkCount();
+                break;
+            }
             
-                if (markCount == winningCombinationLength) {
-                    return true;
-                }
+            if (markCount == winningCombinationLength) {
+                winnerMark = mark;
+                return true;
             }
         }
         
         //проверка диагонали: \ вверх и влево от refPosition
-        checkDiagonalUL:
-        for(int r = refPosition.row-1; r >= 0; r--) {
-            for (int c = refPosition.column-1; c >= 0; c--) {
-                //System.out.println("Проверка (" + r + ", " + c + "): " + field.getValue(r, c) + " счет: " + markCount);
-                if(field.getValue(r, c) == mark) {
-                    markCount++;
-                } else {
-                    resetMarkCount();
-                    break checkDiagonalUL;
-                }
+        for(int r = refPosition.row-1, c = refPosition.column-1; r >= 0 && c >= 0; r--, c--) {
+            if(field.getValue(r, c) == mark) {
+                markCount++;
+            } else {
+                resetMarkCount();
+                break;
+            }
             
-                if (markCount == winningCombinationLength) {
-                    return true;
-                }
+            if (markCount == winningCombinationLength) {
+                winnerMark = mark;
+                return true;
             }
         } 
         
@@ -119,36 +116,32 @@ class Referee {
         resetMarkCount();
         
         //проверка диагонали: / вниз и влево от refPosition
-        checkDiagonalDL:
-        for(int r = refPosition.row+1; r < numberOfRows; r++) {
-            for (int c = refPosition.column-1; c >=0 ; c--) {
-                if(field.getValue(r, c) == mark) {
-                    markCount++;
-                } else {
-                    resetMarkCount();
-                    break checkDiagonalDL;
-                }
+        for(int r = refPosition.row+1, c = refPosition.column-1; r < numberOfRows && c >=0; r++, c--) {
+            if(field.getValue(r, c) == mark) {
+                markCount++;
+            } else {
+                resetMarkCount();
+                break;
+            }
             
-                if (markCount == winningCombinationLength) {
-                    return true;
-                }
+            if (markCount == winningCombinationLength) {
+                winnerMark = mark;
+                return true;
             }
         }
         
         //проверка диагонали: / вверх и вправо от refPosition
-        checkDiagonalUR:
-        for(int r = refPosition.row-1; r >= 0; r--) {
-            for (int c = refPosition.column+1; c < numberOfColumns; c++) {
-                if(field.getValue(r, c) == mark) {
-                    markCount++;
-                } else {
-                    resetMarkCount();
-                    break checkDiagonalUR;
-                }
+        for(int r = refPosition.row-1, c = refPosition.column+1; r >= 0 && c < numberOfColumns; r--, c++) {
+            if(field.getValue(r, c) == mark) {
+                markCount++;
+            } else {
+                resetMarkCount();
+                break;
+            }
             
-                if (markCount == winningCombinationLength) {
-                    return true;
-                }
+            if (markCount == winningCombinationLength) {
+                winnerMark = mark;
+                return true;
             }
         }
         
@@ -165,18 +158,4 @@ class Referee {
     private static void resetMarkCount() {
         markCount = 1;
     }
-//    
-//    private static boolean checkRowForWin() {
-//        return false;
-//    }
-    
-//    //пока Diagonal1 = \
-//    private static boolean checkDiagonal1ForWin() {
-//        return false;
-//    }
-//    
-//    //пока Diagonal2 = /
-//    private static boolean checkDiagonal2ForWin() {
-//        return false;
-//    }
 }
