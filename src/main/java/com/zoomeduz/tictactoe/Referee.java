@@ -9,11 +9,11 @@ class Referee {
     private static char winnerMark;
     private static int markCount;
 
-    static boolean hasWin(Field field, int winningCombinationLength) {
+    static boolean hasWin(Field2D field, int winningCombinationLength) {
         int numberOfRows = field.getNumberOfRows();
         int numberOfColumns = field.getNumberOfColumns();
         CellPosition refPosition = field.getLastFilledSubfield();
-        char mark = field.getValue(refPosition.row, refPosition.column);
+        char mark = field.getValue(refPosition);
         resetMarkCount(); //типа init
         
         //проверка строки вправо от refPosition

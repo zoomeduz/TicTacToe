@@ -76,7 +76,7 @@ class ConsoleIO implements IO {
     //
     // где вместо цифр будет отображено либо заполненное значение, либо пусто
     @Override
-    public void displayField(Field field) {
+    public void displayField(Field2D field) {
         if (field instanceof Field3x3) {
             displayField3x3((Field3x3)field);
         } else {

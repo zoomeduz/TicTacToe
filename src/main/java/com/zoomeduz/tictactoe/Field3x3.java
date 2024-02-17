@@ -4,7 +4,7 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-class Field3x3 implements Field {
+class Field3x3 implements Field2D {
     
     private static final int NUMBER_OF_ROWS = 3;
     private static final int NUMBER_OF_COLUMNS = 3;
@@ -29,11 +29,6 @@ class Field3x3 implements Field {
     public int getCurrentNumberOfEmptySubFields() {
         return currentNumberOfEmptyFields;
     }
-
-    @Override
-    public char[][] getCurrentField() {
-        return simpleField;
-    }
     
     @Override
     public char getEmptyValue() {
@@ -41,13 +36,13 @@ class Field3x3 implements Field {
     }
 
     @Override
-    public void fillInSubfield(int rowNumber, int columnNumber, char mark) throws SubfieldNumberInvalidException {
-        if (simpleField[rowNumber][columnNumber] != EMPTY_VALUE) {
+    public void fillInSubfield(CellPosition pos, char mark) throws SubfieldNumberInvalidException {
+        if (simpleField[pos.row][pos.column] != EMPTY_VALUE) {
             throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
         }
-        simpleField[rowNumber][columnNumber] = mark;
+        simpleField[pos.row][pos.column] = mark;
         currentNumberOfEmptyFields--;
-        lastFilledSubfield = new CellPosition(rowNumber, columnNumber);
+        lastFilledSubfield = pos;
     }
     
     @Override
@@ -58,6 +53,11 @@ class Field3x3 implements Field {
     @Override
     public int getNumberOfColumns() {
         return NUMBER_OF_COLUMNS;
+    }
+    
+    @Override
+    public char getValue(CellPosition pos) {
+        return simpleField[pos.row][pos.column];
     }
     
     @Override
