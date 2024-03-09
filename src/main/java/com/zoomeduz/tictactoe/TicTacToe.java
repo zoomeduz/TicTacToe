@@ -104,7 +104,7 @@ public class TicTacToe {
                         field.fillInCell(position, computerMark);
                     } catch(CellInvalidException e) {
                         io.outputText(e.toString());
-                        break; //тут надо завершать игру, т.к. COMPUTER в неадеквате
+                        System.exit(1);
                     }
                     break;
             }

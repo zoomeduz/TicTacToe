@@ -150,7 +150,6 @@ class Referee {
         return false;
     }
     
-    //может и не надо
     static char getWinnerMark() {
         return winnerMark;
     }
