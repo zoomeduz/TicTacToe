@@ -63,7 +63,7 @@ class ConsoleIO implements IO {
     }
 
     // Фукнция, которая в консоль выводит отображение текущего вида поля.
-    // Формат вывода -- как в функции displayFieldWithSubfieldNumbers():
+    // Формат вывода -- как в функции displayFieldWithCellNumbers():
     //      |     |
     //   1  |  2  |  3
     // _____|_____|_____
@@ -116,7 +116,7 @@ class ConsoleIO implements IO {
     }
 
     @Override
-    public void displayFieldWithSubfieldNumbers() {
+    public void displayFieldWithCellNumbers() {
     //оставлен такой вывод, для наглядности
         System.out.println("     |     |     ");
         System.out.println("  1  |  2  |  3  ");

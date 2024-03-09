@@ -11,12 +11,12 @@ class Field3x3 implements Field2D {
     private static final char EMPTY_VALUE = ' ';
     private int currentNumberOfEmptyFields;
     private char[][] simpleField;
-    private CellPosition lastFilledSubfield;
+    private CellPosition lastFilledCell;
 
     Field3x3() {
         currentNumberOfEmptyFields = NUMBER_OF_COLUMNS*NUMBER_OF_ROWS;
         simpleField = new char[NUMBER_OF_COLUMNS][NUMBER_OF_ROWS];
-        lastFilledSubfield = null;
+        lastFilledCell = null;
 
         for (int r = 0; r < NUMBER_OF_ROWS; r++) {
             for (int c = 0; c < NUMBER_OF_COLUMNS; c++) {
@@ -26,7 +26,7 @@ class Field3x3 implements Field2D {
     }
 
     @Override
-    public int getCurrentNumberOfEmptySubFields() {
+    public int getCurrentNumberOfEmptyCells() {
         return currentNumberOfEmptyFields;
     }
     
@@ -36,13 +36,13 @@ class Field3x3 implements Field2D {
     }
 
     @Override
-    public void fillInSubfield(CellPosition pos, char mark) throws SubfieldNumberInvalidException {
+    public void fillInCell(CellPosition pos, char mark) throws CellInvalidException {
         if (simpleField[pos.row][pos.column] != EMPTY_VALUE) {
-            throw new SubfieldNumberInvalidException("В это поле нельзя сделать ход!\n");
+            throw new CellInvalidException("В это поле нельзя сделать ход!\n");
         }
         simpleField[pos.row][pos.column] = mark;
         currentNumberOfEmptyFields--;
-        lastFilledSubfield = pos;
+        lastFilledCell = pos;
     }
     
     @Override
@@ -66,15 +66,15 @@ class Field3x3 implements Field2D {
     }
     
     @Override
-    public CellPosition getLastFilledSubfield() {
-        return lastFilledSubfield;
+    public CellPosition getLastFilledCell() {
+        return lastFilledCell;
     }
 }
 
-class SubfieldNumberInvalidException extends Exception {
+class CellInvalidException extends Exception {
 	private static final long serialVersionUID = 4805057172244117284L;
 
-	public SubfieldNumberInvalidException(String message){
+	public CellInvalidException(String message){
         super(message);
     }
 }

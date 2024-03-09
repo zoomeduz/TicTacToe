@@ -7,11 +7,11 @@ package com.zoomeduz.tictactoe;
 
 interface Field2D {
     
-    int getCurrentNumberOfEmptySubFields();
+    int getCurrentNumberOfEmptyCells();
 
     char getEmptyValue();
 
-    void fillInSubfield(CellPosition position, char mark) throws SubfieldNumberInvalidException;
+    void fillInCell(CellPosition position, char mark) throws CellInvalidException;
     
     int getNumberOfRows();
     
@@ -21,5 +21,5 @@ interface Field2D {
     
     char getValue(int rowNumber, int columnNumber);
     
-    CellPosition getLastFilledSubfield();
+    CellPosition getLastFilledCell();
 }

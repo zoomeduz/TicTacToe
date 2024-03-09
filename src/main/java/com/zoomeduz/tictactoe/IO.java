@@ -18,5 +18,5 @@ public interface IO {
     
     void displayField(Field2D field);
     
-    void displayFieldWithSubfieldNumbers();
+    void displayFieldWithCellNumbers();
 }

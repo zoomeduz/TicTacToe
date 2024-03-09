@@ -12,7 +12,7 @@ class Referee {
     static boolean hasWin(Field2D field, int winningCombinationLength) {
         int numberOfRows = field.getNumberOfRows();
         int numberOfColumns = field.getNumberOfColumns();
-        CellPosition refPosition = field.getLastFilledSubfield();
+        CellPosition refPosition = field.getLastFilledCell();
         char mark = field.getValue(refPosition);
         resetMarkCount(); //типа init
         

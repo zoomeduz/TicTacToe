@@ -37,7 +37,7 @@ public class TicTacToe {
         char playerMark;
         char computerMark;
         String inputEnteredByPlayer;
-        int subfieldNumber = -1;
+        int CellNumber = -1;
         Move move;
         Move winner = null;
 
@@ -70,29 +70,29 @@ public class TicTacToe {
         Field3x3 field = new Field3x3();
 
         io.outputText("Сетка игры выглядит следующим образом. \nПросьба указывать номер поля, куда хотите сделать свой ход.\n");
-        io.displayFieldWithSubfieldNumbers();
+        io.displayFieldWithCellNumbers();
 
         boolean hasWin = false;
         
         io.displayField(field);
-        while(!hasWin && field.getCurrentNumberOfEmptySubFields() != 0) {
+        while(!hasWin && field.getCurrentNumberOfEmptyCells() != 0) {
             switch(move) {
                 case PLAYER:
                     try {
-                        subfieldNumber = io.getUserInt("Ваш ход (1-9, 0 - показать номера полей)\n");
+                        CellNumber = io.getUserInt("Ваш ход (1-9, 0 - показать номера полей)\n");
                         io.outputText("");
                     } catch(Exception e) {
                         io.outputText("Некорректный знак! Нужно выбрать либо номер поля от 1 до 9.\n" + e + "\n");
                         continue;
                     }
-                    if (subfieldNumber == 0) {
-                        io.displayFieldWithSubfieldNumbers();
+                    if (CellNumber == 0) {
+                        io.displayFieldWithCellNumbers();
                         continue;
                     }
                     try {
-                        field.fillInSubfield(getCellPositionByNumber(subfieldNumber, field.getNumberOfRows(), field.getNumberOfColumns())
+                        field.fillInCell(getCellPositionByNumber(CellNumber, field.getNumberOfRows(), field.getNumberOfColumns())
                                            , playerMark);
-                    } catch(SubfieldNumberInvalidException | CellNumberInvalidException e) {
+                    } catch(CellInvalidException | CellNumberInvalidException e) {
                         io.outputText(e.toString());
                         continue;
                     }
@@ -101,8 +101,8 @@ public class TicTacToe {
                     io.outputText("Ход противника\n");
                     try {
                         CellPosition position = Mover.makeMove(field);
-                        field.fillInSubfield(position, computerMark);
-                    } catch(SubfieldNumberInvalidException e) {
+                        field.fillInCell(position, computerMark);
+                    } catch(CellInvalidException e) {
                         io.outputText(e.toString());
                         break; //тут надо завершать игру, т.к. COMPUTER в неадеквате
                     }
