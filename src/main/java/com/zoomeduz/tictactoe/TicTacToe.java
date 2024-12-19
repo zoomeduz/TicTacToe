@@ -33,7 +33,7 @@ public class TicTacToe {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         char playerMark;
         char computerMark;
         String inputEnteredByPlayer;
@@ -142,12 +142,11 @@ public class TicTacToe {
 
         throw new CellNumberInvalidException("Для заданных numberOfRows и numberOfColumns не может быть такого cellNumber");
     }
-    
 }
 
-class CellNumberInvalidException extends Exception{
+class CellNumberInvalidException extends Exception {
 
-	public CellNumberInvalidException(String message){
+    public CellNumberInvalidException(String message) {
         super(message);
     }
 }

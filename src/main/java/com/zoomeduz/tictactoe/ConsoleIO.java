@@ -10,9 +10,10 @@ import java.util.Scanner;
 class ConsoleIO implements IO {
     
     Scanner input;
-	ConsoleIO() {
-		input = new Scanner(System.in);
-	}
+
+    ConsoleIO() {
+        input = new Scanner(System.in);
+    }
 
     @Override
     public void outputText(String text) {
@@ -27,14 +28,14 @@ class ConsoleIO implements IO {
     @Override
     public int getUserInt(String textDescription) throws InputMismatchException {
         int result;
-		if(!textDescription.equals("")) {
-			System.out.println(textDescription);
-		}
+        if(!textDescription.equals("")) {
+            System.out.println(textDescription);
+        }
         try {
             result = input.nextInt();
             input.nextLine(); // Удаление \n из ввода
         } catch(InputMismatchException e) {
-        	input.next();
+            input.next();
             throw e;
         }
         return result;
@@ -48,15 +49,15 @@ class ConsoleIO implements IO {
     @Override
     public String getUserString(String textDescription) throws InputMismatchException {
         String result = "";
-		if(!textDescription.equals("")) {
-			System.out.println(textDescription);
-		}
+        if(!textDescription.equals("")) {
+            System.out.println(textDescription);
+        }
         try {
-        	if(input.hasNextLine()) {
-        		result = input.nextLine();
+            if(input.hasNextLine()) {
+                result = input.nextLine();
             }
         } catch(InputMismatchException e) {
-        	input.next();
+            input.next();
             throw e;
         }
         return result;

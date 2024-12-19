@@ -5,7 +5,7 @@ package com.zoomeduz.tictactoe;
  * @author zoomeduz
  */
 class Referee {
-    
+
     private static char winnerMark;
     private static int markCount;
 

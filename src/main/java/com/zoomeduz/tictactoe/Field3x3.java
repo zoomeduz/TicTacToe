@@ -10,7 +10,7 @@ class Field3x3 implements Field2D {
     private static final int NUMBER_OF_COLUMNS = 3;
     private static final char EMPTY_VALUE = ' ';
     private int currentNumberOfEmptyFields;
-    private char[][] simpleField;
+    private final char[][] simpleField;
     private CellPosition lastFilledCell;
 
     Field3x3() {
@@ -72,9 +72,9 @@ class Field3x3 implements Field2D {
 }
 
 class CellInvalidException extends Exception {
-	private static final long serialVersionUID = 4805057172244117284L;
+    private static final long serialVersionUID = 4805057172244117284L;
 
-	public CellInvalidException(String message){
+    public CellInvalidException(String message) {
         super(message);
     }
 }
