@@ -20,9 +20,7 @@ class Mover {
             }
         }
         Random rn = new Random();
-        int minimum = 0;
-        int maximum = emptyCells.size() - 1;
-        int index = rn.nextInt(maximum - minimum + 1) + minimum;
+        int index = rn.nextInt(emptyCells.size());
         return emptyCells.get(index);
     }
 }

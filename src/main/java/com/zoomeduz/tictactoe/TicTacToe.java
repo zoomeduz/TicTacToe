@@ -79,8 +79,7 @@ public class TicTacToe {
             switch(move) {
                 case PLAYER:
                     try {
-                        CellNumber = io.getUserInt("Ваш ход (1-9, 0 - показать номера полей)\n");
-                        io.outputText("");
+                        CellNumber = io.getUserInt("Ваш ход (1-9, 0 - показать номера полей)\n\n");
                     } catch(Exception e) {
                         io.outputText("Некорректный знак! Нужно выбрать либо номер поля от 1 до 9.\n" + e + "\n");
                         continue;
@@ -126,21 +125,21 @@ public class TicTacToe {
     
     //cell number: 1..N
     static CellPosition getCellPositionByNumber(int cellNumber, int numberOfRows, int numberOfColumns) throws CellNumberInvalidException {
+        if (numberOfRows < 1 || numberOfColumns < 1) {
+            throw new CellNumberInvalidException("Кол-во столбцов и кол-во строк может быть только натуральное число от 1 до N");
+        }
         if (cellNumber < 1) {
             throw new CellNumberInvalidException("Номером ячейки может быть только натуральное число от 1 до N");
         }
-        int countCell = 0;
-        
-        for (int r = 0; r < numberOfRows; r++) {
-            for (int c = 0; c < numberOfColumns; c++) {
-                countCell++;
-                if (countCell == cellNumber) {
-                    return new CellPosition(r, c);
-                }
-            }
+        if (cellNumber > numberOfRows * numberOfColumns) {
+            throw new CellNumberInvalidException("Для заданных numberOfRows и numberOfColumns не может быть такого cellNumber");
         }
 
-        throw new CellNumberInvalidException("Для заданных numberOfRows и numberOfColumns не может быть такого cellNumber");
+        cellNumber -= 1;
+        int row = cellNumber / numberOfColumns;
+        int column = cellNumber % numberOfColumns;
+
+        return new CellPosition(row, column);
     }
 }
 
