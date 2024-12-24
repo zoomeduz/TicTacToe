@@ -37,7 +37,6 @@ public class TicTacToe {
         char playerMark;
         char computerMark;
         String inputEnteredByPlayer;
-        int CellNumber = -1;
         Move move;
         Move winner = null;
 
@@ -76,20 +75,21 @@ public class TicTacToe {
         
         io.displayField(field);
         while(!hasWin && field.getCurrentNumberOfEmptyCells() != 0) {
+            int cellNumber;
             switch(move) {
                 case PLAYER:
                     try {
-                        CellNumber = io.getUserInt("Ваш ход (1-9, 0 - показать номера полей)\n\n");
+                        cellNumber = io.getUserInt("Ваш ход (1-9, 0 - показать номера полей)\n\n");
                     } catch(Exception e) {
                         io.outputText("Некорректный знак! Нужно выбрать либо номер поля от 1 до 9.\n" + e + "\n");
                         continue;
                     }
-                    if (CellNumber == 0) {
+                    if (cellNumber == 0) {
                         io.displayFieldWithCellNumbers();
                         continue;
                     }
                     try {
-                        field.fillInCell(getCellPositionByNumber(CellNumber, field.getNumberOfRows(), field.getNumberOfColumns())
+                        field.fillInCell(getCellPositionByNumber(cellNumber, field.getNumberOfRows(), field.getNumberOfColumns())
                                            , playerMark);
                     } catch(CellInvalidException | CellNumberInvalidException e) {
                         io.outputText(e.toString());
