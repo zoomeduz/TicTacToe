@@ -8,15 +8,8 @@ interface IO {
     
     void outputText(String text);
 	
-    int getUserInt();
-    
-    int getUserInt(String textDescription);
+    int getInt();
 	
-    String getUserString();
-	
-    String getUserString(String textDescription);
-    
-    void displayField(Field2D field);
-    
-    void displayFieldWithCellNumbers();
+    String getString();
+
 }
