@@ -15,7 +15,7 @@ public class TicTacToe {
         io = new ConsoleIO();
         io.outputText("Давайте сыграем в 'Крестики-нолики'!");
 
-        Mark playerMark = getMarkFromPlayer();
+        Mark playerMark = getMarkForPlayer();
 
         switch(playerMark) {
             case X:
@@ -27,12 +27,12 @@ public class TicTacToe {
                 GameRound.run(new ComputerPlayer(), new ConsolePlayer(io));
                 break;
             default:
-                io.outputText("Получен некорректный знак: playerMark = " + playerMark);
+                throw new RuntimeException("Unreachable");
         }
 
     }
 
-    private static Mark getMarkFromPlayer() {
+    private static Mark getMarkForPlayer() {
 
         String inputEnteredByPlayer;
 

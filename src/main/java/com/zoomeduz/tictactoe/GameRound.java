@@ -6,20 +6,17 @@ package com.zoomeduz.tictactoe;
  */
 public class GameRound {
 
-    private final static int NUMBER_OF_CELLS = 9;
-    private final static int NUMBER_OF_PLAYERS = 2;
     private final static Field3x3 field = new Field3x3();
     private final static FieldViewer viewer = makeViewer(field);
 
     static void run(Player playerX, Player playerO) {
         Player[] players = new Player[]{playerX, playerO};
-        GameRoundResult result;
 
         for(Player p: players) {
             p.onGameStarted(viewer);
         }
 
-        result = play(players);
+        GameRoundResult result = play(players);
 
         for(Player p: players) {
             p.onGameFinished(result);
@@ -49,14 +46,12 @@ public class GameRound {
 
     private static GameRoundResult play(Player[] players) {
         int playerIndex = 0;
-        int cellIndex;
-        Player currentPlayer;
 
         while(field.getNumberOfFreeCells() > 0) {
-            currentPlayer = players[playerIndex];
-            cellIndex = currentPlayer.getMove();
+            Player currentPlayer = players[playerIndex];
+            int cellIndex = currentPlayer.getMove();
 
-            if (cellIndex < 0 || cellIndex > NUMBER_OF_CELLS - 1) {
+            if (!field.isOnField(cellIndex)) {
                 currentPlayer.onMoveProcessed(MoveResult.INDEX_OUT_OF_FIELD);
                 continue;
             }
@@ -72,7 +67,7 @@ public class GameRound {
                 return playerIndex == 0? GameRoundResult.WIN_X : GameRoundResult.WIN_O;
             }
 
-            playerIndex = (playerIndex + 1) % NUMBER_OF_PLAYERS;
+            playerIndex = (playerIndex + 1) % players.length;
         }
 
         return GameRoundResult.DRAW;

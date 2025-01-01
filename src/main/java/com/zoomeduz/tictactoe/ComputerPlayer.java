@@ -20,17 +20,10 @@ class ComputerPlayer implements Player {
     public void onGameFinished(GameRoundResult grr) {
     }
 
-//нужна проверка на отсутсвие инициализированного field?
     //пока играет чисто рандомно, без анализа
     @Override
     public int getMove() {
-
-    //имитация продумывания хода
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        makeDelay();
 
         ArrayList<Integer> freeCells = new ArrayList<>();
         for (int i = 0; i < field.getNumberOfCells(); i++) {
@@ -45,6 +38,19 @@ class ComputerPlayer implements Player {
 
     @Override
     public void onMoveProcessed(MoveResult mr) {
+    }
+
+    //имитация продумывания хода
+    private void makeDelay() {
+        int maxDelay = 1200;
+        int minDelay = 600;
+
+        Random rn = new Random();
+        int delay = rn.nextInt(maxDelay - minDelay + 1) + minDelay;
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+        }
     }
     
 }

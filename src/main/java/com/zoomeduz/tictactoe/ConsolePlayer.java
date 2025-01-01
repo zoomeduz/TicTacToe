@@ -4,11 +4,22 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-//Стоит переименовать в ConsolePlayer3х3?
 public class ConsolePlayer implements Player {
 
-    FieldViewer field;
-    IO io;
+    private FieldViewer field;
+    private final IO io;
+    private final String fieldTemplate =
+                String.join("\n",
+                    "     |     |     " ,
+                    "  ?  |  ?  |  ?  " ,
+                    "_____|_____|_____" ,
+                    "     |     |     " ,
+                    "  ?  |  ?  |  ?  " ,
+                    "_____|_____|_____" ,
+                    "     |     |     " ,
+                    "  ?  |  ?  |  ?  " ,
+                    "     |     |     "
+            ).replace("?", "%s");;
 
     ConsolePlayer(IO io) {
         this.io = io;
@@ -24,7 +35,17 @@ public class ConsolePlayer implements Player {
     @Override
     public void onGameFinished(GameRoundResult grr) {
         displayField();
-        io.outputText(grr.toString());
+        switch(grr) {
+            case WIN_X:
+                io.outputText("Выиграли X");
+                break;
+            case WIN_O:
+                io.outputText("Выиграли O");
+                break;
+            case DRAW:
+                io.outputText("Ничья");
+                break;
+        }
     }
 
     @Override
@@ -51,42 +72,36 @@ public class ConsolePlayer implements Player {
 
     @Override
     public void onMoveProcessed(MoveResult mr) {
-        if (mr != null && mr != MoveResult.SUCCESSFUL) {
-            io.outputText(mr.toString());
-            io.outputText("");
+        switch(mr) {
+            case INDEX_OUT_OF_FIELD:
+                io.outputText("Выбранной ячейки нет на поле");
+                break;
+            case INDEX_OF_FILLED_CELL:
+                io.outputText("Выбранная ячейка уже заполнена");
+                break;
         }
+        io.outputText("");
     }
 
     private void displayField() {
-        io.outputText("     |     |     ");
-        io.outputText(String.format("  %s  |  %s  |  %s  ", getMark(0), getMark(1), getMark(2)));
-        io.outputText("_____|_____|_____");
-        io.outputText("     |     |     ");
-        io.outputText(String.format("  %s  |  %s  |  %s  ", getMark(3), getMark(4), getMark(5)));
-        io.outputText("_____|_____|_____");
-        io.outputText("     |     |     ");
-        io.outputText(String.format("  %s  |  %s  |  %s  ", getMark(6), getMark(7), getMark(8)));
-        io.outputText("     |     |     ");
+        io.outputText(String.format(fieldTemplate,
+            getMark(0), getMark(1), getMark(2),
+            getMark(3), getMark(4), getMark(5),
+            getMark(6), getMark(7), getMark(8)));
         io.outputText("");
     }
 
     private void displayFieldWithCellIndexes() {
-        //оставлен такой вывод, для наглядности
-        io.outputText("     |     |     ");
-        io.outputText("  1  |  2  |  3  ");
-        io.outputText("_____|_____|_____");
-        io.outputText("     |     |     ");
-        io.outputText("  4  |  5  |  6  ");
-        io.outputText("_____|_____|_____");
-        io.outputText("     |     |     ");
-        io.outputText("  7  |  8  |  9  ");
-        io.outputText("     |     |     ");
+        io.outputText(String.format(fieldTemplate,
+            1, 2, 3,
+            4, 5, 6,
+            7, 8, 9));
         io.outputText("");
     }
 
     private String getMark(int cellIndex) {
         Mark m = field.get(cellIndex);
-        return m == null? " ": m.toString();
+        return m == null? " " : m.toString();
     }
 
 }

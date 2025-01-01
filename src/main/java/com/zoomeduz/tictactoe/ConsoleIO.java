@@ -12,7 +12,7 @@ class ConsoleIO implements IO {
     Scanner input;
 
     ConsoleIO() {
-        input = new Scanner(System.in);
+        input = new Scanner(System.in).useDelimiter("\\s");
     }
 
     @Override
@@ -25,7 +25,6 @@ class ConsoleIO implements IO {
         int result;
         try {
             result = input.nextInt();
-            input.nextLine(); // Удаление \n из ввода
         } catch(InputMismatchException e) {
             input.next();
             throw e;
@@ -41,7 +40,6 @@ class ConsoleIO implements IO {
                 result = input.nextLine();
             }
         } catch(InputMismatchException e) {
-            input.next();
             throw e;
         }
         return result;
