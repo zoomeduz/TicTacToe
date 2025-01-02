@@ -6,7 +6,7 @@ package com.zoomeduz.tictactoe;
  */
 public class GameRound {
 
-    private final static Field3x3 field = new Field3x3();
+    private final static Field field = new Field();
     private final static FieldViewer viewer = makeViewer(field);
 
     static void run(Player playerX, Player playerO) {
@@ -23,7 +23,7 @@ public class GameRound {
         }
     }
 
-    private static FieldViewer makeViewer(Field3x3 field) {
+    private static FieldViewer makeViewer(Field field) {
         return new FieldViewer() {
 
             @Override
@@ -63,7 +63,7 @@ public class GameRound {
             field.set(cellIndex, playerIndex == 0? Mark.X : Mark.O);
             currentPlayer.onMoveProcessed(MoveResult.SUCCESSFUL);
 
-            if (Referee3x3.hasWin(viewer, cellIndex)) {
+            if (Referee.hasWin(viewer, cellIndex)) {
                 return playerIndex == 0? GameRoundResult.WIN_X : GameRoundResult.WIN_O;
             }
 

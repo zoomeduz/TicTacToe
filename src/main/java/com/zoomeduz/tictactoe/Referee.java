@@ -4,11 +4,12 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-class Referee3x3 {
+class Referee {
 
     private static final int NUMBER_OF_ROWS = 3;
     private static final int NUMBER_OF_COLUMNS = 3;
     private static final int WINNING_COMBINATION_LENGTH = 3;
+
     private static final Direction LEFT          = new Direction(+0, -1);
     private static final Direction RIGHT         = new Direction(+0, +1);
     private static final Direction TOP           = new Direction(-1, +0);

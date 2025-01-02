@@ -4,7 +4,7 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-class Field3x3 {
+class Field {
     
     private static final int NUMBER_OF_ROWS = 3;
     private static final int NUMBER_OF_COLUMNS = 3;
