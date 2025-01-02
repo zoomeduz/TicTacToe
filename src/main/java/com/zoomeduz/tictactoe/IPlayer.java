@@ -4,9 +4,9 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-interface Player {
+interface IPlayer {
     
-    void onGameStarted(FieldViewer fv);
+    void onGameStarted(IFieldViewer fv);
     
     void onGameFinished(GameRoundResult grr);
 

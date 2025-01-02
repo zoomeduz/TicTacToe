@@ -4,7 +4,7 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-interface IO {
+interface IConsoleIO {
     
     void outputText(String text);
 	

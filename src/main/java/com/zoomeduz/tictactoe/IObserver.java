@@ -4,9 +4,9 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-interface Observer {
+interface IObserver {
     
-	void onGameRoundStarted(FieldViewer fv);
+	void onGameRoundStarted(IFieldViewer fv);
     
 	void onGameRoundFinished(GameRoundResult grr);
     

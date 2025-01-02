@@ -4,10 +4,10 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-public class ConsolePlayer implements Player {
+public class ConsolePlayer implements IPlayer {
 
-    private FieldViewer field;
-    private final IO io;
+    private IFieldViewer field;
+    private final IConsoleIO io;
     private final String fieldTemplate =
                 String.join("\n",
                     "     |     |     " ,
@@ -21,12 +21,12 @@ public class ConsolePlayer implements Player {
                     "     |     |     "
             ).replace("?", "%s");
 
-    ConsolePlayer(IO io) {
+    ConsolePlayer(IConsoleIO io) {
         this.io = io;
     }
 
     @Override
-    public void onGameStarted(FieldViewer fv) {
+    public void onGameStarted(IFieldViewer fv) {
         field = fv;
         io.outputText("Сетка игры выглядит следующим образом. \nПросьба указывать номер поля, куда хотите сделать свой ход.\n");
         displayFieldWithCellIndexes();

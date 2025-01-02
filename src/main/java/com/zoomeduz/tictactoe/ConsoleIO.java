@@ -7,8 +7,8 @@ import java.util.Scanner;
  *
  * @author zoomeduz
  */
-class ConsoleIO implements IO {
-    
+class ConsoleIO implements IConsoleIO {
+
     Scanner input;
 
     ConsoleIO() {

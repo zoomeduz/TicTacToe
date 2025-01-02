@@ -7,7 +7,7 @@ package com.zoomeduz.tictactoe;
  */
 public class TicTacToe {
 
-    private static IO io;
+    private static IConsoleIO io;
 
     public static void main(String[] args) {
 
@@ -17,7 +17,7 @@ public class TicTacToe {
 
         Mark playerMark = getMarkForPlayer();
         
-        Observer observer = new ConsoleObserver(io);
+        IObserver observer = new ConsoleObserver(io);
 
         switch(playerMark) {
             case X:

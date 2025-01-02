@@ -4,7 +4,7 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-public interface FieldViewer {
+interface IFieldViewer {
 
     Mark get(int row, int column);
 

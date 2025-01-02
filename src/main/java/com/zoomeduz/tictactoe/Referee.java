@@ -19,7 +19,7 @@ class Referee {
     private static final Direction TOP_RIGHT     = new Direction(-1, +1);
     private static final Direction BOTTOM_LEFT   = new Direction(+1, -1);
 
-    static boolean hasWin(FieldViewer field, int cellIndex) {
+    static boolean hasWin(IFieldViewer field, int cellIndex) {
         int target = WINNING_COMBINATION_LENGTH - 1; //-1, т.к. countMark() не учитывает ячейку cellIndex
         
         if (countMark(field, LEFT, cellIndex) + countMark(field, RIGHT, cellIndex) >= target) {
@@ -41,7 +41,7 @@ class Referee {
         return false;
     }
 
-    private static int countMark(FieldViewer field, Direction dir, int cellIndex) {
+    private static int countMark(IFieldViewer field, Direction dir, int cellIndex) {
         Mark mark = field.get(cellIndex);
         int r = cellIndex / NUMBER_OF_COLUMNS + dir.rowInc;
         int c = cellIndex % NUMBER_OF_COLUMNS + dir.columnInc;

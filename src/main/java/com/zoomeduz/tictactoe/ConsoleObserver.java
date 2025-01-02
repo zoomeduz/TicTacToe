@@ -4,10 +4,10 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-class ConsoleObserver implements Observer {
+class ConsoleObserver implements IObserver {
     
-    private FieldViewer field;
-    private final IO io;
+    private IFieldViewer field;
+    private final IConsoleIO io;
     private final String fieldTemplate =
                 String.join("\n",
                     "     |     |     " ,
@@ -21,12 +21,12 @@ class ConsoleObserver implements Observer {
                     "     |     |     "
             ).replace("?", "%s");
     
-    ConsoleObserver(IO io) {
+    ConsoleObserver(IConsoleIO io) {
         this.io = io;
     }
 
     @Override
-    public void onGameRoundStarted(FieldViewer fv) {
+    public void onGameRoundStarted(IFieldViewer fv) {
         field = fv;
     }
 

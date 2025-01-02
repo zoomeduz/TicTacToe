@@ -7,26 +7,26 @@ package com.zoomeduz.tictactoe;
 public class GameRound {
 
     private final static Field        field = new Field();
-    private final static FieldViewer viewer = makeViewer(field);
+    private final static IFieldViewer viewer = makeViewer(field);
 
-    static void run(Player playerX, Player playerO, Observer  observer) {
-        Player[] players = new Player[]{playerX, playerO};
+    static void run(IPlayer playerX, IPlayer playerO, IObserver  observer) {
+        IPlayer[] players = new IPlayer[]{playerX, playerO};
 
-        for(Player p: players) {
+        for(IPlayer p: players) {
             p.onGameStarted(viewer);
         }
         observer.onGameRoundStarted(viewer);
 
         GameRoundResult result = play(players, observer);
 
-        for(Player p: players) {
+        for(IPlayer p: players) {
             p.onGameFinished(result);
         }
         observer.onGameRoundFinished(result);
     }
 
-    private static FieldViewer makeViewer(Field field) {
-        return new FieldViewer() {
+    private static IFieldViewer makeViewer(Field field) {
+        return new IFieldViewer() {
 
             @Override
             public Mark get(int row, int column) {
@@ -46,11 +46,11 @@ public class GameRound {
         };
     }
 
-    private static GameRoundResult play(Player[] players, Observer  observer) {
+    private static GameRoundResult play(IPlayer[] players, IObserver  observer) {
         int playerIndex = 0;
 
         while(field.getNumberOfFreeCells() > 0) {
-            Player currentPlayer = players[playerIndex];
+            IPlayer currentPlayer = players[playerIndex];
             Mark currentMark = playerIndex == 0? Mark.X : Mark.O;
 
             observer.onMoveBefore(currentMark);

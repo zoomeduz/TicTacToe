@@ -7,12 +7,12 @@ import java.util.Random;
  *
  * @author zoomeduz
  */
-class ComputerPlayer implements Player {
+class ComputerPlayer implements IPlayer {
     
-    FieldViewer field;
+    IFieldViewer field;
 
     @Override
-    public void onGameStarted(FieldViewer fv) {
+    public void onGameStarted(IFieldViewer fv) {
         field = fv;
     }
 
