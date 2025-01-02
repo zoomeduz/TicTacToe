@@ -6,158 +6,65 @@ package com.zoomeduz.tictactoe;
  */
 class Referee3x3 {
 
-    private static Mark winnerMark;
-    private static int markCount;
     private static final int NUMBER_OF_ROWS = 3;
     private static final int NUMBER_OF_COLUMNS = 3;
     private static final int WINNING_COMBINATION_LENGTH = 3;
+    private static final Direction LEFT          = new Direction(+0, -1);
+    private static final Direction RIGHT         = new Direction(+0, +1);
+    private static final Direction TOP           = new Direction(-1, +0);
+    private static final Direction BOTTOM        = new Direction(+1, +0);
+    private static final Direction TOP_LEFT      = new Direction(-1, -1);
+    private static final Direction BOTTOM_RIGHT  = new Direction(+1, +1);
+    private static final Direction TOP_RIGHT     = new Direction(-1, +1);
+    private static final Direction BOTTOM_LEFT   = new Direction(+1, -1);
 
-    static boolean hasWin(FieldViewer field, int lastCellIndex) {
-        int refRow = lastCellIndex / NUMBER_OF_COLUMNS;
-        int refColumn = lastCellIndex % NUMBER_OF_COLUMNS;
-        Mark mark = field.get(lastCellIndex);
-        resetMarkCount(); //типа init
+    static boolean hasWin(FieldViewer field, int cellIndex) {
+        int target = WINNING_COMBINATION_LENGTH - 1; //-1, т.к. countMark() не учитывает ячейку cellIndex
         
-        //проверка строки вправо от lastCellIndex
-        for(int c = refColumn + 1; c < NUMBER_OF_COLUMNS; c++) {
-            if(field.get(refRow, c) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
+        if (countMark(field, LEFT, cellIndex) + countMark(field, RIGHT, cellIndex) >= target) {
+            return true;
         }
-        
-        //проверка строки влево от lastCellIndex
-        for(int c = refColumn - 1; c >= 0; c--) {
-            if(field.get(refRow, c) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
+
+        if (countMark(field, TOP, cellIndex) + countMark(field, BOTTOM, cellIndex) >= target) {
+            return true;
         }
-        
-        //переход от проверки строки к столбцу
-        resetMarkCount();
-        
-        //проверка столбца вниз от lastCellIndex
-        for(int r = refRow + 1; r < NUMBER_OF_ROWS; r++) {
-            if(field.get(r, refColumn) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
+
+        if (countMark(field, TOP_LEFT, cellIndex) + countMark(field, BOTTOM_RIGHT, cellIndex) >= target) {
+            return true;
         }
-        
-        //проверка столбца вверх от lastCellIndex
-        for(int r = refRow - 1; r >= 0; r--) {
-            if(field.get(r, refColumn) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
+
+        if (countMark(field, TOP_RIGHT, cellIndex) + countMark(field, BOTTOM_LEFT, cellIndex) >= target) {
+            return true;
         }
-        
-        //переход от проверки столбца к диагонали: \
-        resetMarkCount();
-        
-        //проверка диагонали: \ вниз и вправо от lastCellIndex
-        for(int r = refRow + 1, c = refColumn + 1; r < NUMBER_OF_ROWS && c < NUMBER_OF_COLUMNS; r++, c++) {
-            if(field.get(r, c) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
-        }
-        
-        //проверка диагонали: \ вверх и влево от lastCellIndex
-        for(int r = refRow - 1, c = refColumn - 1; r >= 0 && c >= 0; r--, c--) {
-            if(field.get(r, c) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
-        } 
-        
-        //переход от проверки диагонали от \ к /
-        resetMarkCount();
-        
-        //проверка диагонали: / вниз и влево от lastCellIndex
-        for(int r = refRow + 1, c = refColumn - 1; r < NUMBER_OF_ROWS && c >=0; r++, c--) {
-            if(field.get(r, c) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
-        }
-        
-        //проверка диагонали: / вверх и вправо от lastCellIndex
-        for(int r = refRow - 1, c = refColumn + 1; r >= 0 && c < NUMBER_OF_COLUMNS; r--, c++) {
-            if(field.get(r, c) == mark) {
-                markCount++;
-            } else {
-                resetMarkCount();
-                break;
-            }
-            
-            if (markCount == WINNING_COMBINATION_LENGTH) {
-                winnerMark = mark;
-                return true;
-            }
-        }
-        
-        resetMarkCount();
         
         return false;
     }
-    
-    static Mark getWinnerMark() {
-        return winnerMark;
+
+    private static int countMark(FieldViewer field, Direction dir, int cellIndex) {
+        Mark mark = field.get(cellIndex);
+        int r = cellIndex / NUMBER_OF_COLUMNS + dir.rowInc;
+        int c = cellIndex % NUMBER_OF_COLUMNS + dir.columnInc;
+        int count = 0;
+
+        while(r < NUMBER_OF_ROWS && r >= 0 && c < NUMBER_OF_COLUMNS && c >= 0 && field.get(r, c) == mark) {
+            r = r + dir.rowInc;
+            c = c + dir.columnInc;
+            count++;
+        }
+        
+        return count;
     }
-    
-    private static void resetMarkCount() {
-        markCount = 1;
+
+}
+
+class Direction {
+
+    int rowInc;
+    int columnInc;
+
+    Direction(int rowInc, int columnInc) {
+        this.rowInc = rowInc;
+        this.columnInc = columnInc;
     }
 
 }
