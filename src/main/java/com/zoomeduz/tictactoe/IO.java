@@ -11,5 +11,7 @@ interface IO {
     int getInt();
 	
     String getString();
+    
+    void clear();
 
 }

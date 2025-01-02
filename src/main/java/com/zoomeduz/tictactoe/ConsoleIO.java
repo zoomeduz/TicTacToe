@@ -44,5 +44,10 @@ class ConsoleIO implements IO {
         }
         return result;
     }
+    
+    @Override
+    public void clear() {
+        System.out.printf("\033[2J"); //ANSI ESC SEQUENCE - erase entire screen
+    }
 
 }

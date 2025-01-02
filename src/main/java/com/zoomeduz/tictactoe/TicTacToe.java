@@ -16,15 +16,17 @@ public class TicTacToe {
         io.outputText("Давайте сыграем в 'Крестики-нолики'!");
 
         Mark playerMark = getMarkForPlayer();
+        
+        Observer observer = new ConsoleObserver(io);
 
         switch(playerMark) {
             case X:
                 io.outputText("Первым будете ходить вы.\n");
-                GameRound.run(new ConsolePlayer(io), new ComputerPlayer());
+                GameRound.run(new ConsolePlayer(io), new ComputerPlayer(), observer);
                 break;
             case O:
                 io.outputText("Первым будет ходить компьютер.\n");
-                GameRound.run(new ComputerPlayer(), new ConsolePlayer(io));
+                GameRound.run(new ComputerPlayer(), new ConsolePlayer(io), observer);
                 break;
             default:
                 throw new RuntimeException("Unreachable");

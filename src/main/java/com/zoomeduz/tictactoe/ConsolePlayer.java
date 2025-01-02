@@ -19,7 +19,7 @@ public class ConsolePlayer implements Player {
                     "     |     |     " ,
                     "  ?  |  ?  |  ?  " ,
                     "     |     |     "
-            ).replace("?", "%s");;
+            ).replace("?", "%s");
 
     ConsolePlayer(IO io) {
         this.io = io;
@@ -34,28 +34,15 @@ public class ConsolePlayer implements Player {
 
     @Override
     public void onGameFinished(GameRoundResult grr) {
-        displayField();
-        switch(grr) {
-            case WIN_X:
-                io.outputText("Выиграли X");
-                break;
-            case WIN_O:
-                io.outputText("Выиграли O");
-                break;
-            case DRAW:
-                io.outputText("Ничья");
-                break;
-        }
     }
 
     @Override
     public int getMove() {
-        displayField();
         int cellIndex;
 
         while(true) {
             try {
-                io.outputText("Ваш ход (1-9, 0 - показать номера полей)\n\n");
+                io.outputText("Выберите: 1-9, 0 - показать номера полей\n");
                 cellIndex = io.getInt();
                 io.outputText("");
             } catch(Exception e) {
@@ -83,25 +70,12 @@ public class ConsolePlayer implements Player {
         io.outputText("");
     }
 
-    private void displayField() {
-        io.outputText(String.format(fieldTemplate,
-            getMark(0), getMark(1), getMark(2),
-            getMark(3), getMark(4), getMark(5),
-            getMark(6), getMark(7), getMark(8)));
-        io.outputText("");
-    }
-
     private void displayFieldWithCellIndexes() {
         io.outputText(String.format(fieldTemplate,
             1, 2, 3,
             4, 5, 6,
             7, 8, 9));
         io.outputText("");
-    }
-
-    private String getMark(int cellIndex) {
-        Mark m = field.get(cellIndex);
-        return m == null? " " : m.toString();
     }
 
 }
