@@ -7,69 +7,34 @@ package com.zoomeduz.tictactoe;
 class ConsoleObserver implements IObserver {
     
     private IFieldViewer field;
-    private final IConsoleIO io;
-    private final String fieldTemplate =
-                String.join("\n",
-                    "     |     |     " ,
-                    "  ?  |  ?  |  ?  " ,
-                    "_____|_____|_____" ,
-                    "     |     |     " ,
-                    "  ?  |  ?  |  ?  " ,
-                    "_____|_____|_____" ,
-                    "     |     |     " ,
-                    "  ?  |  ?  |  ?  " ,
-                    "     |     |     "
-            ).replace("?", "%s");
-    
-    ConsoleObserver(IConsoleIO io) {
-        this.io = io;
+    private final IGameUI ui;
+    private boolean displayHelpOnGameStart = false;
+
+    ConsoleObserver(IGameUI ui, boolean displayHelpOnGameStart) {
+        this.ui = ui;
+        this.displayHelpOnGameStart = displayHelpOnGameStart;
     }
 
     @Override
     public void onGameRoundStarted(IFieldViewer fv) {
         field = fv;
+        if (displayHelpOnGameStart) {
+            ui.displayFieldWithHelp(field);
+        }
     }
 
     @Override
     public void onGameRoundFinished(GameRoundResult grr) {
-        io.clear();
-        io.outputText("Игра завершена:\n");
-        displayField();
-        switch(grr) {
-            case WIN_X:
-                io.outputText("Выиграл X");
-                break;
-            case WIN_O:
-                io.outputText("Выиграл O");
-                break;
-            case DRAW:
-                io.outputText("Ничья");
-                break;
-        }
+        ui.displayRoundResult(field, grr);
     }
     
     @Override
     public void onMoveBefore(Mark mark) {
-        io.clear();
-        io.outputText("Сейчас ход " + mark.toString() + ":\n");
-        displayField();
+        ui.displayCurrentMoveMark(field, mark);
     }
 
     @Override
     public void onMoveDone(int cellIndex, Mark mark) {
-    }
-    
-    private void displayField() {
-        io.outputText(String.format(fieldTemplate,
-            getMark(0), getMark(1), getMark(2),
-            getMark(3), getMark(4), getMark(5),
-            getMark(6), getMark(7), getMark(8)));
-        io.outputText("");
-    }
-
-    private String getMark(int cellIndex) {
-        Mark m = field.get(cellIndex);
-        return m == null? " " : m.toString();
     }
     
 }

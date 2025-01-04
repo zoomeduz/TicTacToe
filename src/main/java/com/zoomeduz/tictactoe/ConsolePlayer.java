@@ -1,35 +1,24 @@
 package com.zoomeduz.tictactoe;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author zoomeduz
  */
-public class ConsolePlayer implements IPlayer {
+class ConsolePlayer implements IPlayer {
 
     private IFieldViewer field;
-    private final IConsoleIO io;
-    private final String fieldTemplate =
-                String.join("\n",
-                    "     |     |     " ,
-                    "  ?  |  ?  |  ?  " ,
-                    "_____|_____|_____" ,
-                    "     |     |     " ,
-                    "  ?  |  ?  |  ?  " ,
-                    "_____|_____|_____" ,
-                    "     |     |     " ,
-                    "  ?  |  ?  |  ?  " ,
-                    "     |     |     "
-            ).replace("?", "%s");
+    private final IGameUI ui;
 
-    ConsolePlayer(IConsoleIO io) {
-        this.io = io;
+    ConsolePlayer(IGameUI ui) {
+        this.ui = ui;
     }
 
     @Override
     public void onGameStarted(IFieldViewer fv) {
         field = fv;
-        io.outputText("Сетка игры выглядит следующим образом. \nПросьба указывать номер поля, куда хотите сделать свой ход.\n");
-        displayFieldWithCellIndexes();
     }
 
     @Override
@@ -38,44 +27,17 @@ public class ConsolePlayer implements IPlayer {
 
     @Override
     public int getMove() {
-        int cellIndex;
-
-        while(true) {
-            try {
-                io.outputText("Выберите: 1-9, 0 - показать номера полей\n");
-                cellIndex = io.getInt();
-                io.outputText("");
-            } catch(Exception e) {
-                io.outputText("Некорректный знак! Нужно выбрать либо номер поля от 1 до 9.\n" + e + "\n");
-                continue;
+        Set<Integer> availCellIndexes = new HashSet<>();
+        for (int i = 0; i < field.getNumberOfCells(); i++) {
+            if (field.get(i) == null) {
+                availCellIndexes.add(i);
             }
-            if (cellIndex == 0) {
-                displayFieldWithCellIndexes();
-                continue;
-            }
-            return cellIndex - 1; //-1, т.к. ячейки в поле нумируются с 0
         }
+        return ui.getCellIndex(field, availCellIndexes);
     }
 
     @Override
-    public void onMoveProcessed(MoveResult mr) {
-        switch(mr) {
-            case INDEX_OUT_OF_FIELD:
-                io.outputText("Выбранной ячейки нет на поле");
-                break;
-            case INDEX_OF_FILLED_CELL:
-                io.outputText("Выбранная ячейка уже заполнена");
-                break;
-        }
-        io.outputText("");
-    }
-
-    private void displayFieldWithCellIndexes() {
-        io.outputText(String.format(fieldTemplate,
-            1, 2, 3,
-            4, 5, 6,
-            7, 8, 9));
-        io.outputText("");
+    public void onMoveProcessed() {
     }
 
 }

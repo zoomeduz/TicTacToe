@@ -12,6 +12,6 @@ interface IPlayer {
 
     int getMove();
     
-    void onMoveProcessed(MoveResult mr);
+    void onMoveProcessed();
 
 }

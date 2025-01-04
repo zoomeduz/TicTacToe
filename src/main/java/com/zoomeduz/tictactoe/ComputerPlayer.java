@@ -37,13 +37,13 @@ class ComputerPlayer implements IPlayer {
     }
 
     @Override
-    public void onMoveProcessed(MoveResult mr) {
+    public void onMoveProcessed() {
     }
 
     //имитация продумывания хода
     private void makeDelay() {
-        int maxDelay = 1200;
-        int minDelay = 600;
+        int maxDelay = 2000;
+        int minDelay = 800;
 
         Random rn = new Random();
         int delay = rn.nextInt(maxDelay - minDelay + 1) + minDelay;

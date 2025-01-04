@@ -54,29 +54,16 @@ public class GameRound {
             Mark currentMark = playerIndex == 0? Mark.X : Mark.O;
 
             observer.onMoveBefore(currentMark);
-            Integer validCellIndex = null;
-            
-            while(validCellIndex == null) {
-                int cellIndex = currentPlayer.getMove();
+            Integer cellIndex = currentPlayer.getMove();
 
-                if (!field.isOnField(cellIndex)) {
-                    currentPlayer.onMoveProcessed(MoveResult.INDEX_OUT_OF_FIELD);
-                    continue;
-                }
-
-                if (field.get(cellIndex) != null) {
-                    currentPlayer.onMoveProcessed(MoveResult.INDEX_OF_FILLED_CELL);
-                    continue;
-                }
-
-                validCellIndex = cellIndex;
+            if (field.get(cellIndex) != null || !field.isOnField(cellIndex)) {
+                throw new InvalidMoveException("Невалидный ход");
             }
 
-            field.set(validCellIndex, currentMark);
-            currentPlayer.onMoveProcessed(MoveResult.SUCCESSFUL);
-            observer.onMoveDone(validCellIndex, currentMark);
+            field.set(cellIndex, currentMark);
+            observer.onMoveDone(cellIndex, currentMark);
 
-            if (Referee.hasWin(viewer, validCellIndex)) {
+            if (Referee.hasWin(viewer, cellIndex)) {
                 return playerIndex == 0? GameRoundResult.WIN_X : GameRoundResult.WIN_O;
             }
 
@@ -84,6 +71,14 @@ public class GameRound {
         }
 
         return GameRoundResult.DRAW;
+    }
+
+}
+
+class InvalidMoveException extends RuntimeException {
+
+    InvalidMoveException(String message) {
+        super(message);
     }
 
 }
