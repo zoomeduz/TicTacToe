@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 class ConsoleIO implements IConsoleIO {
 
-    Scanner input;
+    private final Scanner input;
 
     ConsoleIO() {
         input = new Scanner(System.in).useDelimiter("\\s");
@@ -22,14 +22,8 @@ class ConsoleIO implements IConsoleIO {
 
     @Override
     public int getInt() {
-        int result;
-        try {
-            result = input.nextInt();
-        } catch(InputMismatchException e) {
-            input.next();
-            throw e;
-        }
-        return result;
+        String in = getString();
+        return Integer.parseInt(in);
     }
 
     @Override
