@@ -4,7 +4,7 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-public enum Mark {
+enum Mark {
 
     X, O;
 

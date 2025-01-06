@@ -4,7 +4,7 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-public class GameRound {
+class GameRound {
 
     private final static Field        field = new Field();
     private final static IFieldViewer viewer = makeViewer(field);

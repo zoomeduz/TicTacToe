@@ -9,7 +9,7 @@ import java.util.Random;
  */
 class ComputerPlayer implements IPlayer {
     
-    IFieldViewer field;
+    private IFieldViewer field;
 
     @Override
     public void onGameRoundStarted(IFieldViewer fv) {

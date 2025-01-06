@@ -10,7 +10,6 @@ public class TicTacToe {
     private static IGameUI ui;
 
     public static void main(String[] args) {
-
         //режим пока один: игрок против компьютера
         ui = new GameUI(new ConsoleIO());
 
