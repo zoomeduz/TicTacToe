@@ -1,6 +1,6 @@
 package com.zoomeduz.tictactoe;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  *
@@ -33,7 +33,7 @@ class GameUI implements IGameUI {
     }
 
     @Override
-    public int getCellIndex(IFieldViewer fv, Set<Integer> availCellIndexes) {
+    public int getCellIndex(IFieldViewer fv) {
         int cellIndex;
         //вынести 1, 9, 0 в константы?
         
@@ -57,7 +57,8 @@ class GameUI implements IGameUI {
                 continue;
             }
             cellIndex--; //-1, т.к. ячейки в поле нумируются с 0
-            if (!availCellIndexes.contains(cellIndex)) { //вынести в отдельный класс Core
+            List<Integer> availCellIndexes = Core.getAvailCellIndexes(fv);
+            if (!availCellIndexes.contains(cellIndex)) {
                 io.outputText("Выбранная ячейка уже заполнена\n");
                 continue;
             }

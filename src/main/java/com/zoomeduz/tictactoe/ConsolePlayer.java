@@ -1,8 +1,5 @@
 package com.zoomeduz.tictactoe;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  *
  * @author zoomeduz
@@ -27,13 +24,10 @@ class ConsolePlayer implements IPlayer {
 
     @Override
     public int getMove() {
-        Set<Integer> availCellIndexes = new HashSet<>();
-        for (int i = 0; i < field.getNumberOfCells(); i++) {
-            if (field.get(i) == null) {
-                availCellIndexes.add(i);
-            }
+        if (Core.getAvailCellIndexes(field).isEmpty()) {
+            throw new RuntimeException("Нет доступных ячеек на поле для хода");
         }
-        return ui.getCellIndex(field, availCellIndexes);
+        return ui.getCellIndex(field);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.zoomeduz.tictactoe;
 
-import java.util.Set;
-
 /**
  *
  * @author zoomeduz
@@ -10,7 +8,7 @@ interface IGameUI {
     
     void displayGameStart();
     
-    int getCellIndex(IFieldViewer fv, Set<Integer> availCellIndexes); //убрать availCellIndexes
+    int getCellIndex(IFieldViewer fv);
     
     Mark getMarkForPlayer();
     

@@ -1,6 +1,6 @@
 package com.zoomeduz.tictactoe;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -25,12 +25,11 @@ class ComputerPlayer implements IPlayer {
     public int getMove() {
         makeDelay();
 
-        ArrayList<Integer> freeCells = new ArrayList<>();
-        for (int i = 0; i < field.getNumberOfCells(); i++) {
-            if (field.get(i) == null) {
-                freeCells.add(i);
-            }
+        List<Integer> freeCells = Core.getAvailCellIndexes(field);
+        if (freeCells.isEmpty()) {
+            throw new RuntimeException("Нет доступных ячеек на поле для хода");
         }
+
         Random rn = new Random();
         int index = rn.nextInt(freeCells.size());
         return freeCells.get(index);

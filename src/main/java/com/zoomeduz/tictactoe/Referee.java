@@ -6,9 +6,8 @@ package com.zoomeduz.tictactoe;
  */
 class Referee {
 
-    private static final int NUMBER_OF_ROWS = 3;
-    private static final int NUMBER_OF_COLUMNS = 3;
-    private static final int WINNING_COMBINATION_LENGTH = 3;
+    private static final int NUMBER_OF_ROWS    = Core.NUMBER_OF_ROWS_ON_FIELD;
+    private static final int NUMBER_OF_COLUMNS = Core.NUMBER_OF_COLUMNS_ON_FIELD;
 
     private static final Direction LEFT          = new Direction(+0, -1);
     private static final Direction RIGHT         = new Direction(+0, +1);
@@ -20,7 +19,7 @@ class Referee {
     private static final Direction BOTTOM_LEFT   = new Direction(+1, -1);
 
     static boolean hasWin(IFieldViewer field, int cellIndex) {
-        int target = WINNING_COMBINATION_LENGTH - 1; //-1, т.к. countMark() не учитывает ячейку cellIndex
+        int target = Core.WINNING_COMBINATION_LENGTH - 1; //-1, т.к. countMark() не учитывает ячейку cellIndex
         
         if (countMark(field, LEFT, cellIndex) + countMark(field, RIGHT, cellIndex) >= target) {
             return true;

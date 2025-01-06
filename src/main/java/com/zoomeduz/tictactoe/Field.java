@@ -6,8 +6,8 @@ package com.zoomeduz.tictactoe;
  */
 class Field {
     
-    private static final int NUMBER_OF_ROWS = 3;
-    private static final int NUMBER_OF_COLUMNS = 3;
+    private static final int NUMBER_OF_ROWS    = Core.NUMBER_OF_ROWS_ON_FIELD;
+    private static final int NUMBER_OF_COLUMNS = Core.NUMBER_OF_COLUMNS_ON_FIELD;
     private static final int SIZE = NUMBER_OF_COLUMNS * NUMBER_OF_ROWS;
     private final Mark[] field = new Mark[SIZE];
     private int numberOfFreeCells = SIZE;
