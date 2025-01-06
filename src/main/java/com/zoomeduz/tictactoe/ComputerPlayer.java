@@ -12,12 +12,12 @@ class ComputerPlayer implements IPlayer {
     IFieldViewer field;
 
     @Override
-    public void onGameStarted(IFieldViewer fv) {
+    public void onGameRoundStarted(IFieldViewer fv) {
         field = fv;
     }
 
     @Override
-    public void onGameFinished(GameRoundResult grr) {
+    public void onGameRoundFinished(GameRoundResult grr) {
     }
 
     //пока играет чисто рандомно, без анализа
@@ -34,10 +34,6 @@ class ComputerPlayer implements IPlayer {
         Random rn = new Random();
         int index = rn.nextInt(freeCells.size());
         return freeCells.get(index);
-    }
-
-    @Override
-    public void onMoveProcessed() {
     }
 
     //имитация продумывания хода

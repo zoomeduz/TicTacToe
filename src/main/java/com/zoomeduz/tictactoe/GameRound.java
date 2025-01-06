@@ -13,14 +13,14 @@ public class GameRound {
         IPlayer[] players = new IPlayer[]{playerX, playerO};
 
         for(IPlayer p: players) {
-            p.onGameStarted(viewer);
+            p.onGameRoundStarted(viewer);
         }
         observer.onGameRoundStarted(viewer);
 
         GameRoundResult result = play(players, observer);
 
         for(IPlayer p: players) {
-            p.onGameFinished(result);
+            p.onGameRoundFinished(result);
         }
         observer.onGameRoundFinished(result);
     }

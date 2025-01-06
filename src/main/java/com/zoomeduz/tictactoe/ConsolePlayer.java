@@ -17,12 +17,12 @@ class ConsolePlayer implements IPlayer {
     }
 
     @Override
-    public void onGameStarted(IFieldViewer fv) {
+    public void onGameRoundStarted(IFieldViewer fv) {
         field = fv;
     }
 
     @Override
-    public void onGameFinished(GameRoundResult grr) {
+    public void onGameRoundFinished(GameRoundResult grr) {
     }
 
     @Override
@@ -34,10 +34,6 @@ class ConsolePlayer implements IPlayer {
             }
         }
         return ui.getCellIndex(field, availCellIndexes);
-    }
-
-    @Override
-    public void onMoveProcessed() {
     }
 
 }
