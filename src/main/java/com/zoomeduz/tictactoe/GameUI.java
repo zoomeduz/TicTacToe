@@ -124,15 +124,9 @@ class GameUI implements IGameUI {
         io.outputText("Игра завершена:\n");
         displayField(fv);
         switch(grr) {
-            case WIN_X:
-                io.outputText("Выиграл X");
-                break;
-            case WIN_O:
-                io.outputText("Выиграл O");
-                break;
-            case DRAW:
-                io.outputText("Ничья");
-                break;
+            case WIN_X -> io.outputText("Выиграл X");
+            case WIN_O -> io.outputText("Выиграл O");
+            case DRAW  -> io.outputText("Ничья");
         }
     }
     

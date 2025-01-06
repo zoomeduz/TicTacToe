@@ -10,11 +10,11 @@ public enum Mark {
 
     @Override
     public String toString() {
-        switch(this) {
-            case X:     return "X";
-            case O:     return "O";
-            default:    return " ";
-        }
+        return switch (this) {
+            case X  -> "X";
+            case O  -> "O";
+            default -> " ";
+        };
     }
 
 }
