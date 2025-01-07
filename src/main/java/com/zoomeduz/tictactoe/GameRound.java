@@ -6,43 +6,15 @@ package com.zoomeduz.tictactoe;
  */
 class GameRound {
 
-    private final static Field        field = new Field();
-    private final static IFieldViewer viewer = makeViewer(field);
-
     static GameRoundResult run(IPlayer playerX, IPlayer playerO) {
         if (playerX.getMark() == playerO.getMark()) {
             throw new RuntimeException("У разных игроков не может быть один марк - " + playerX.getMark());
         }
 
-        IPlayer[] players = new IPlayer[]{playerX, playerO};
+        IPlayer[]   players = new IPlayer[]{playerX, playerO};
+        Field         field = new Field();
+        IFieldViewer viewer = makeViewer(field);
 
-        GameRoundResult result = play(players);
-
-        return result;
-    }
-
-    private static IFieldViewer makeViewer(Field field) {
-        return new IFieldViewer() {
-
-            @Override
-            public Mark get(int row, int column) {
-                return field.get(row, column);
-            }
-
-            @Override
-            public Mark get(int cellIndex) {
-                return field.get(cellIndex);
-            }
-
-            @Override
-            public int getNumberOfCells() {
-                return field.getNumberOfCells();
-            }
-
-        };
-    }
-
-    private static GameRoundResult play(IPlayer[] players) {
         int playerIndex = 0;
 
         while(field.getNumberOfFreeCells() > 0) {
@@ -65,6 +37,27 @@ class GameRound {
         }
 
         return new GameRoundResult(viewer);
+    }
+
+    private static IFieldViewer makeViewer(Field field) {
+        return new IFieldViewer() {
+
+            @Override
+            public Mark get(int row, int column) {
+                return field.get(row, column);
+            }
+
+            @Override
+            public Mark get(int cellIndex) {
+                return field.get(cellIndex);
+            }
+
+            @Override
+            public int getNumberOfCells() {
+                return field.getNumberOfCells();
+            }
+
+        };
     }
 
 }
