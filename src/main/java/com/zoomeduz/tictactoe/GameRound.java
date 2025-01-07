@@ -10,6 +10,10 @@ class GameRound {
     private final static IFieldViewer viewer = makeViewer(field);
 
     static GameRoundResult run(IPlayer playerX, IPlayer playerO, IObserver  observer) {
+        if (playerX.getMark() == playerO.getMark()) {
+            throw new RuntimeException("У разных игроков не может быть один марк - " + playerX.getMark());
+        }
+
         IPlayer[] players = new IPlayer[]{playerX, playerO};
 
         for(IPlayer p: players) {
@@ -52,7 +56,7 @@ class GameRound {
 
         while(field.getNumberOfFreeCells() > 0) {
             IPlayer currentPlayer = players[playerIndex];
-            Mark currentMark = playerIndex == 0? Mark.X : Mark.O;
+            Mark currentMark = currentPlayer.getMark();
 
             observer.onMoveBefore(currentMark);
             Integer cellIndex = currentPlayer.getMove();

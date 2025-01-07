@@ -8,9 +8,11 @@ class ConsolePlayer implements IPlayer {
 
     private IFieldViewer field;
     private final IGameUI ui;
+    private final Mark mark;
 
-    ConsolePlayer(IGameUI ui) {
+    ConsolePlayer(IGameUI ui, Mark mark) {
         this.ui = ui;
+        this.mark = mark;
     }
 
     @Override
@@ -28,6 +30,11 @@ class ConsolePlayer implements IPlayer {
             throw new RuntimeException("Нет доступных ячеек на поле для хода");
         }
         return ui.getCellIndex(field);
+    }
+
+    @Override
+    public Mark getMark() {
+        return mark;
     }
 
 }

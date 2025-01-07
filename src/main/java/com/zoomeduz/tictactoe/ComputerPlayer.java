@@ -10,6 +10,11 @@ import java.util.Random;
 class ComputerPlayer implements IPlayer {
     
     private IFieldViewer field;
+    private final Mark mark;
+
+    ComputerPlayer(Mark mark) {
+        this.mark = mark;
+    }
 
     @Override
     public void onGameRoundStarted(IFieldViewer fv) {
@@ -47,5 +52,10 @@ class ComputerPlayer implements IPlayer {
         } catch (InterruptedException e) {
         }
     }
-    
+
+    @Override
+    public Mark getMark() {
+        return mark;
+    }
+
 }
