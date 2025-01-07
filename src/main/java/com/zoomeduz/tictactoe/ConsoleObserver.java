@@ -8,19 +8,14 @@ class ConsoleObserver implements IObserver {
     
     private IFieldViewer field;
     private final IGameUI ui;
-    private boolean displayHelpOnGameStart = false;
 
-    ConsoleObserver(IGameUI ui, boolean displayHelpOnGameStart) {
+    ConsoleObserver(IGameUI ui) {
         this.ui = ui;
-        this.displayHelpOnGameStart = displayHelpOnGameStart;
     }
 
     @Override
     public void onGameRoundStarted(IFieldViewer fv) {
         field = fv;
-        if (displayHelpOnGameStart) {
-            ui.displayHelp();
-        }
     }
 
     @Override

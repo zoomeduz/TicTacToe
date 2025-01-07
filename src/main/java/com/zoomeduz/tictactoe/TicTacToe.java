@@ -15,8 +15,9 @@ public class TicTacToe {
 
         ui.displayGameStart();
         Mark playerMark = ui.getMarkForPlayer();
+        ui.displayHelp();
 
-        IObserver observer = new ConsoleObserver(ui, true);
+        IObserver observer = new ConsoleObserver(ui);
 
         switch(playerMark) {
             case X  -> GameRound.run(new ConsolePlayer(ui), new ComputerPlayer(), observer);
