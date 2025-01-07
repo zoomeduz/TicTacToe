@@ -64,13 +64,13 @@ class GameRound {
             observer.onMoveDone(cellIndex, currentMark);
 
             if (Referee.hasWin(viewer, cellIndex)) {
-                return playerIndex == 0? GameRoundResult.WIN_X : GameRoundResult.WIN_O;
+                return new GameRoundResult(viewer, currentMark);
             }
 
             playerIndex = (playerIndex + 1) % players.length;
         }
 
-        return GameRoundResult.DRAW;
+        return new GameRoundResult(viewer);
     }
 
 }

@@ -18,6 +18,6 @@ interface IGameUI {
     
     void displayCurrentMoveMark(IFieldViewer fv, Mark mark);
     
-    void displayRoundResult(IFieldViewer fv, GameRoundResult grr);
+    void displayRoundResult(GameRoundResult grr);
     
 }

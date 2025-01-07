@@ -120,14 +120,15 @@ class GameUI implements IGameUI {
     }
 
     @Override
-    public void displayRoundResult(IFieldViewer fv, GameRoundResult grr) {
+    public void displayRoundResult(GameRoundResult grr) {
         io.clear();
         io.outputText("Игра завершена:\n");
-        displayField(fv);
-        switch(grr) {
-            case WIN_X -> io.outputText("Выиграл X");
-            case WIN_O -> io.outputText("Выиграл O");
-            case DRAW  -> io.outputText("Ничья");
+        displayField(grr.getResultField());
+
+        if (grr.hasWinner()) {
+            io.outputText("Выиграл " + grr.getWinner());
+        } else {
+            io.outputText("Ничья");
         }
     }
     
