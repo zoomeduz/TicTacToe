@@ -47,7 +47,7 @@ class GameUI implements IGameUI {
                 continue;
             }
             if (cellIndex == 0) {        
-                displayFieldWithHelp(fv);
+                displayHelp();
                 io.clear();
                 displayField(fv);
                 continue;
@@ -100,7 +100,7 @@ class GameUI implements IGameUI {
     }
 
     @Override
-    public void displayFieldWithHelp(IFieldViewer fv) {
+    public void displayHelp() {
         io.clear();
         io.outputText("Сетка игры выглядит следующим образом:");
         io.outputText(String.format(fieldTemplate,

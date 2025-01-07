@@ -19,7 +19,7 @@ class ConsoleObserver implements IObserver {
     public void onGameRoundStarted(IFieldViewer fv) {
         field = fv;
         if (displayHelpOnGameStart) {
-            ui.displayFieldWithHelp(field);
+            ui.displayHelp();
         }
     }
 

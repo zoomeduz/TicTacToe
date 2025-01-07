@@ -14,7 +14,7 @@ interface IGameUI {
     
     void displayField(IFieldViewer fv);
     
-    void displayFieldWithHelp(IFieldViewer fv);
+    void displayHelp();
     
     void displayCurrentMoveMark(IFieldViewer fv, Mark mark);
     
