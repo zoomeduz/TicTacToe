@@ -8,26 +8,16 @@ import java.util.Random;
  * @author zoomeduz
  */
 class ComputerPlayer implements IPlayer {
-    
-    private IFieldViewer field;
+
     private final Mark mark;
 
     ComputerPlayer(Mark mark) {
         this.mark = mark;
     }
 
-    @Override
-    public void onGameRoundStarted(IFieldViewer fv) {
-        field = fv;
-    }
-
-    @Override
-    public void onGameRoundFinished(GameRoundResult grr) {
-    }
-
     //пока играет чисто рандомно, без анализа
     @Override
-    public int getMove() {
+    public int getMove(IFieldViewer field) {
         makeDelay();
 
         List<Integer> freeCells = Core.getAvailCellIndexes(field);

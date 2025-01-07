@@ -6,30 +6,18 @@ package com.zoomeduz.tictactoe;
  */
 class MoveDisplayWrapper implements IPlayer {
 
-    private IPlayer player;
     private final IGameUI ui;
-    private IFieldViewer field;
-    
+    private final IPlayer player;
+
     MoveDisplayWrapper(IGameUI ui, IPlayer nonConsolePlayer) {
         this.ui = ui;
         this.player = nonConsolePlayer;
     }
 
     @Override
-    public void onGameRoundStarted(IFieldViewer fv) {
-        field = fv;
-        player.onGameRoundStarted(fv);
-    }
-
-    @Override
-    public void onGameRoundFinished(GameRoundResult grr) {
-        player.onGameRoundFinished(grr);
-    }
-
-    @Override
-    public int getMove() {
+    public int getMove(IFieldViewer field) {
         ui.displayCurrentMoveMark(field, player.getMark());
-        return player.getMove();
+        return player.getMove(field);
     }
 
     @Override

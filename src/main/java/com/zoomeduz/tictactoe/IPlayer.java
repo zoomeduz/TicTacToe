@@ -6,11 +6,7 @@ package com.zoomeduz.tictactoe;
  */
 interface IPlayer {
 
-    void onGameRoundStarted(IFieldViewer fv);
-
-    void onGameRoundFinished(GameRoundResult grr);
-
-    int getMove();
+    int getMove(IFieldViewer fv);
 
     Mark getMark();
 

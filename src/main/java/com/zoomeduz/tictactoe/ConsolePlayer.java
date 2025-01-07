@@ -6,7 +6,6 @@ package com.zoomeduz.tictactoe;
  */
 class ConsolePlayer implements IPlayer {
 
-    private IFieldViewer field;
     private final IGameUI ui;
     private final Mark mark;
 
@@ -16,16 +15,7 @@ class ConsolePlayer implements IPlayer {
     }
 
     @Override
-    public void onGameRoundStarted(IFieldViewer fv) {
-        field = fv;
-    }
-
-    @Override
-    public void onGameRoundFinished(GameRoundResult grr) {
-    }
-
-    @Override
-    public int getMove() {
+    public int getMove(IFieldViewer field) {
         if (Core.getAvailCellIndexes(field).isEmpty()) {
             throw new RuntimeException("Нет доступных ячеек на поле для хода");
         }

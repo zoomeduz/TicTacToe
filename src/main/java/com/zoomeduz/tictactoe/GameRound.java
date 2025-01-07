@@ -16,15 +16,8 @@ class GameRound {
 
         IPlayer[] players = new IPlayer[]{playerX, playerO};
 
-        for(IPlayer p: players) {
-            p.onGameRoundStarted(viewer);
-        }
-
         GameRoundResult result = play(players);
 
-        for(IPlayer p: players) {
-            p.onGameRoundFinished(result);
-        }
         return result;
     }
 
@@ -56,7 +49,7 @@ class GameRound {
             IPlayer currentPlayer = players[playerIndex];
             Mark currentMark = currentPlayer.getMark();
 
-            Integer cellIndex = currentPlayer.getMove();
+            Integer cellIndex = currentPlayer.getMove(viewer);
 
             if (field.get(cellIndex) != null || !field.isOnField(cellIndex)) {
                 throw new InvalidMoveException("Невалидный ход");
