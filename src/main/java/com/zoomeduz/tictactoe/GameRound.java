@@ -9,7 +9,7 @@ class GameRound {
     private final static Field        field = new Field();
     private final static IFieldViewer viewer = makeViewer(field);
 
-    static GameRoundResult run(IPlayer playerX, IPlayer playerO, IObserver  observer) {
+    static GameRoundResult run(IPlayer playerX, IPlayer playerO) {
         if (playerX.getMark() == playerO.getMark()) {
             throw new RuntimeException("У разных игроков не может быть один марк - " + playerX.getMark());
         }
@@ -19,14 +19,12 @@ class GameRound {
         for(IPlayer p: players) {
             p.onGameRoundStarted(viewer);
         }
-        observer.onGameRoundStarted(viewer);
 
-        GameRoundResult result = play(players, observer);
+        GameRoundResult result = play(players);
 
         for(IPlayer p: players) {
             p.onGameRoundFinished(result);
         }
-        observer.onGameRoundFinished(result);
         return result;
     }
 
@@ -51,14 +49,13 @@ class GameRound {
         };
     }
 
-    private static GameRoundResult play(IPlayer[] players, IObserver  observer) {
+    private static GameRoundResult play(IPlayer[] players) {
         int playerIndex = 0;
 
         while(field.getNumberOfFreeCells() > 0) {
             IPlayer currentPlayer = players[playerIndex];
             Mark currentMark = currentPlayer.getMark();
 
-            observer.onMoveBefore(currentMark);
             Integer cellIndex = currentPlayer.getMove();
 
             if (field.get(cellIndex) != null || !field.isOnField(cellIndex)) {
@@ -66,7 +63,6 @@ class GameRound {
             }
 
             field.set(cellIndex, currentMark);
-            observer.onMoveDone(cellIndex, currentMark);
 
             if (Referee.hasWin(viewer, cellIndex)) {
                 return new GameRoundResult(viewer, currentMark);
