@@ -19,11 +19,13 @@ public class TicTacToe {
 
         IObserver observer = new ConsoleObserver(ui);
 
-        switch(playerMark) {
+        GameRoundResult roundResult = switch(playerMark) {
             case X  -> GameRound.run(new ConsolePlayer(ui), new ComputerPlayer(), observer);
             case O  -> GameRound.run(new ComputerPlayer(), new ConsolePlayer(ui), observer);
             default -> throw new RuntimeException("Unreachable");
-        }
+        };
+
+        ui.displayRoundResult(roundResult);
     }
 
 }

@@ -9,7 +9,7 @@ class GameRound {
     private final static Field        field = new Field();
     private final static IFieldViewer viewer = makeViewer(field);
 
-    static void run(IPlayer playerX, IPlayer playerO, IObserver  observer) {
+    static GameRoundResult run(IPlayer playerX, IPlayer playerO, IObserver  observer) {
         IPlayer[] players = new IPlayer[]{playerX, playerO};
 
         for(IPlayer p: players) {
@@ -23,6 +23,7 @@ class GameRound {
             p.onGameRoundFinished(result);
         }
         observer.onGameRoundFinished(result);
+        return result;
     }
 
     private static IFieldViewer makeViewer(Field field) {

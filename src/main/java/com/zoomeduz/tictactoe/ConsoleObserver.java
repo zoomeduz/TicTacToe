@@ -20,7 +20,6 @@ class ConsoleObserver implements IObserver {
 
     @Override
     public void onGameRoundFinished(GameRoundResult grr) {
-        ui.displayRoundResult(grr);
     }
     
     @Override
