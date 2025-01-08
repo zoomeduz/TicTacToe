@@ -76,31 +76,35 @@ class ConsoleUI implements IGameUI {
 
     @Override
     public Mark getMarkForPlayer() {
-        String inputEnteredByPlayer;
+        final int NUMBER_FOR_X = 1;
+        final int NUMBER_FOR_O = 2;
+        int inputEnteredByPlayer;
 
         while(true) {
+            io.outputText("Каким знаком будете играть?");
+            io.outputText(String.format("%d. %s", NUMBER_FOR_X, Mark.X));
+            io.outputText(String.format("%d. %s", NUMBER_FOR_O, Mark.O));
+            io.outputText("Введите нужное число:");
             try {
-                io.outputText(String.format("Каким знаком будете играть? (%s или %s)"
-                    , Mark.X
-                    , Mark.O));
-                inputEnteredByPlayer = io.getString();
-                io.outputText("");
+                inputEnteredByPlayer = io.getInt();
             } catch(Exception e) {
-                io.outputText(String.format("Некорректный знак! Нужно выбрать либо '%s' либо '%s'.\n"
-                    , Mark.X
-                    , Mark.O));
+                io.outputText(String.format("\nНекорректный знак! Нужно выбрать либо '%d' либо '%d'.\n"
+                    , NUMBER_FOR_X
+                    , NUMBER_FOR_O));
                 io.outputText(e + "\n");
                 continue;
             }
-            if (inputEnteredByPlayer.equalsIgnoreCase(Mark.X.toString())) {
+            io.outputText("");
+
+            if (inputEnteredByPlayer == NUMBER_FOR_X) {
                 return Mark.X;
             }
-            if (inputEnteredByPlayer.equalsIgnoreCase(Mark.O.toString())) {
+            if (inputEnteredByPlayer == NUMBER_FOR_O) {
                 return Mark.O;
             }
-            io.outputText(String.format("Нужно выбрать либо '%s' либо '%s'.\n"
-                , Mark.X
-                , Mark.O));
+            io.outputText(String.format("Нужно выбрать либо '%d' либо '%d'.\n"
+                , NUMBER_FOR_X
+                , NUMBER_FOR_O));
         }
     }
 
