@@ -1,6 +1,6 @@
 package com.zoomeduz.tictactoe;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -67,7 +67,7 @@ class ConsoleUI implements IGameUI {
                 continue;
             }
             cellIndex--; //-1, т.к. ячейки в поле нумируются с 0
-            List<Integer> availCellIndexes = Core.getAvailCellIndexes(fv);
+            Set<Integer> availCellIndexes = Core.getAvailCellIndexes(fv);
             if (!availCellIndexes.contains(cellIndex)) {
                 io.outputText("Выбранная ячейка уже заполнена\n");
                 continue;
