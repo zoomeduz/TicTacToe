@@ -11,7 +11,7 @@ public class TicTacToe {
 
     public static void main(String[] args) {
         //режим пока один: игрок против компьютера
-        ui = new GameUI(new ConsoleIO());
+        ui = new ConsoleUI(new ConsoleIO());
 
         ui.displayGameStart();
         Mark playerMark = ui.getMarkForPlayer();

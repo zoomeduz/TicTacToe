@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author zoomeduz
  */
-class GameUI implements IGameUI {
+class ConsoleUI implements IGameUI {
 
     private final IConsoleIO io;
     private IFieldViewer field;
@@ -23,7 +23,7 @@ class GameUI implements IGameUI {
                     "     |     |     "
             ).replace("?", "%s");
 
-    GameUI(IConsoleIO io) {
+    ConsoleUI(IConsoleIO io) {
         this.io = io;
     }
 
