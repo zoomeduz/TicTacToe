@@ -5,7 +5,7 @@ package com.zoomeduz.tictactoe;
  * @author zoomeduz
  */
 class Field {
-    
+
     private static final int NUMBER_OF_ROWS    = Core.NUMBER_OF_ROWS_ON_FIELD;
     private static final int NUMBER_OF_COLUMNS = Core.NUMBER_OF_COLUMNS_ON_FIELD;
     private static final int SIZE = NUMBER_OF_COLUMNS * NUMBER_OF_ROWS;

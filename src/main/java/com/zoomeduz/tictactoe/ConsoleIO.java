@@ -12,7 +12,7 @@ class ConsoleIO implements IConsoleIO {
     private final Scanner input;
 
     ConsoleIO() {
-        input = new Scanner(System.in).useDelimiter("\\s");
+        input = new Scanner(System.in);
     }
 
     @Override
@@ -38,7 +38,7 @@ class ConsoleIO implements IConsoleIO {
         }
         return result;
     }
-    
+
     @Override
     public void clear() {
         System.out.printf("\033[2J"); //ANSI ESC SEQUENCE - erase entire screen

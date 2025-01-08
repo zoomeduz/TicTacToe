@@ -7,7 +7,7 @@ import java.util.List;
  * @author zoomeduz
  */
 class GameUI implements IGameUI {
-    
+
     private final IConsoleIO io;
     private IFieldViewer field;
     private final String fieldTemplate =
@@ -22,37 +22,45 @@ class GameUI implements IGameUI {
                     "  ?  |  ?  |  ?  " ,
                     "     |     |     "
             ).replace("?", "%s");
-    
+
     GameUI(IConsoleIO io) {
         this.io = io;
     }
-    
+
     @Override
     public void displayGameStart() {
         io.outputText("Давайте сыграем в 'Крестики-нолики'!");
     }
 
     @Override
-    public int getCellIndex(IFieldViewer fv) {
+    public int getCellIndex(IFieldViewer fv) {//getConsolePlayerMove?
+        final int MIN_CELL_INDEX = 1;
+        final int MAX_CELL_INDEX = 9;
+        final int DISPLAY_HELP   = 0;
         int cellIndex;
-        //вынести 1, 9, 0 в константы?
-        
+
         while(true) {
             try {
-                io.outputText("Выберите: 1 - 9, 0 - показать номера полей\n");
+                io.outputText(String.format("Выберите: %d - %d, %d - показать номера ячеек\n"
+                    , MIN_CELL_INDEX
+                    , MAX_CELL_INDEX
+                    , DISPLAY_HELP));
                 cellIndex = io.getInt();
                 io.outputText("");
             } catch(Exception e) {
-                io.outputText("Некорректный знак! Нужно выбрать либо номер поля от 1 до 9.\n" + e + "\n");
+                io.outputText(String.format("Некорректный знак! Нужно выбрать номер ячейки от %d до %d.\n"
+                    , MIN_CELL_INDEX
+                    , MAX_CELL_INDEX));
+                io.outputText(e + "\n");
                 continue;
             }
-            if (cellIndex == 0) {        
+            if (cellIndex == DISPLAY_HELP) {
                 displayHelp();
                 io.clear();
                 displayField(fv);
                 continue;
             }
-            if (cellIndex < 1 || cellIndex > 9) {
+            if (cellIndex < MIN_CELL_INDEX || cellIndex > MAX_CELL_INDEX) {
                 io.outputText("Выбранной ячейки нет на поле\n");
                 continue;
             }
@@ -65,18 +73,23 @@ class GameUI implements IGameUI {
             return cellIndex;
         }
     }
-    
+
     @Override
     public Mark getMarkForPlayer() {
         String inputEnteredByPlayer;
 
         while(true) {
             try {
-                io.outputText("Каким знаком будете играть? (" + Mark.X + " или " + Mark.O + ")");
+                io.outputText(String.format("Каким знаком будете играть? (%s или %s)"
+                    , Mark.X
+                    , Mark.O));
                 inputEnteredByPlayer = io.getString();
                 io.outputText("");
             } catch(Exception e) {
-                io.outputText("Некорректный знак! Нужно выбрать либо '" + Mark.X + "' либо '" + Mark.O + "'.\n" + e + "\n");
+                io.outputText(String.format("Некорректный знак! Нужно выбрать либо '%s' либо '%s'.\n"
+                    , Mark.X
+                    , Mark.O));
+                io.outputText(e + "\n");
                 continue;
             }
             if (inputEnteredByPlayer.equalsIgnoreCase(Mark.X.toString())) {
@@ -85,17 +98,19 @@ class GameUI implements IGameUI {
             if (inputEnteredByPlayer.equalsIgnoreCase(Mark.O.toString())) {
                 return Mark.O;
             }
-            io.outputText("Нужно выбрать либо '" + Mark.X + "' либо '" + Mark.O + "'.");
+            io.outputText(String.format("Нужно выбрать либо '%s' либо '%s'.\n"
+                , Mark.X
+                , Mark.O));
         }
     }
 
     @Override
     public void displayField(IFieldViewer fv) {
         field = fv;
-        io.outputText(String.format(fieldTemplate,
-            getMark(0), getMark(1), getMark(2),
-            getMark(3), getMark(4), getMark(5),
-            getMark(6), getMark(7), getMark(8)));
+        io.outputText(String.format(fieldTemplate
+            , getMark(0), getMark(1), getMark(2)
+            , getMark(3), getMark(4), getMark(5)
+            , getMark(6), getMark(7), getMark(8)));
         io.outputText("");
     }
 
@@ -103,19 +118,19 @@ class GameUI implements IGameUI {
     public void displayHelp() {
         io.clear();
         io.outputText("Сетка игры выглядит следующим образом:");
-        io.outputText(String.format(fieldTemplate,
-            1, 2, 3,
-            4, 5, 6,
-            7, 8, 9));
+        io.outputText(String.format(fieldTemplate
+            , 1, 2, 3
+            , 4, 5, 6
+            , 7, 8, 9));
         io.outputText("");
-        io.outputText("Просьба указывать номер поля, куда хотите сделать свой ход.\n");
+        io.outputText("Просьба указывать номер ячейки, куда хотите сделать свой ход.\n");
         askForContinue();
     }
-    
+
     @Override
-    public void displayCurrentMoveMark(IFieldViewer fv, Mark mark) {
+    public void displayMove(IFieldViewer fv, Mark mark) {
         io.clear();
-        io.outputText("Сейчас ход " + mark.toString() + ":\n");
+        io.outputText(String.format("Сейчас ход %s:\n", mark));
         displayField(fv);
     }
 
@@ -131,7 +146,7 @@ class GameUI implements IGameUI {
             io.outputText("Ничья");
         }
     }
-    
+
     private String getMark(int cellIndex) {
         Mark m = field.get(cellIndex);
         return m == null ? " " : m.toString();
@@ -141,5 +156,5 @@ class GameUI implements IGameUI {
         io.outputText("Нажмите Enter чтобы продолжить...");
         io.getString();
     }
-    
+
 }

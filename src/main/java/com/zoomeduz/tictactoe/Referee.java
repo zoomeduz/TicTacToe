@@ -4,7 +4,7 @@ package com.zoomeduz.tictactoe;
  *
  * @author zoomeduz
  */
-class Referee {
+class Referee { //перенести в Core?
 
     private static final int NUMBER_OF_ROWS    = Core.NUMBER_OF_ROWS_ON_FIELD;
     private static final int NUMBER_OF_COLUMNS = Core.NUMBER_OF_COLUMNS_ON_FIELD;
@@ -20,7 +20,7 @@ class Referee {
 
     static boolean hasWin(IFieldViewer field, int cellIndex) {
         int target = Core.WINNING_COMBINATION_LENGTH - 1; //-1, т.к. countMark() не учитывает ячейку cellIndex
-        
+
         if (countMark(field, LEFT, cellIndex) + countMark(field, RIGHT, cellIndex) >= target) {
             return true;
         }
@@ -36,7 +36,7 @@ class Referee {
         if (countMark(field, TOP_RIGHT, cellIndex) + countMark(field, BOTTOM_LEFT, cellIndex) >= target) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -51,7 +51,7 @@ class Referee {
             c = c + dir.columnInc;
             count++;
         }
-        
+
         return count;
     }
 

@@ -16,7 +16,7 @@ class MoveDisplayWrapper implements IPlayer {
 
     @Override
     public int getMove(IFieldViewer field) {
-        ui.displayCurrentMoveMark(field, player.getMark());
+        ui.displayMove(field, player.getMark());
         return player.getMove(field);
     }
 
