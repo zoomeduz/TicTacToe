@@ -20,7 +20,8 @@ class ConsoleUI implements IGameUI {
                     "_____|_____|_____" ,
                     "     |     |     " ,
                     "  ?  |  ?  |  ?  " ,
-                    "     |     |     "
+                    "     |     |     " ,
+                    ""
             ).replace("?", "%s");
 
     ConsoleUI(IConsoleIO io) {
@@ -36,19 +37,18 @@ class ConsoleUI implements IGameUI {
     public int getConsolePlayerMove(IFieldViewer fv, Mark mark) {
         final int MIN_CELL_INDEX = 1;
         final int MAX_CELL_INDEX = 9;
-        final int DISPLAY_HELP   = 0;
+        final int NUM_FOR_DISPLAY_HELP = 0;
         int cellIndex;
 
         io.clear();
         while(true) {
             displayMove(fv, mark);
+            io.outputText(String.format("Выберите: %d - %d, %d - показать номера ячеек\n"
+                , MIN_CELL_INDEX
+                , MAX_CELL_INDEX
+                , NUM_FOR_DISPLAY_HELP));
             try {
-                io.outputText(String.format("Выберите: %d - %d, %d - показать номера ячеек\n"
-                    , MIN_CELL_INDEX
-                    , MAX_CELL_INDEX
-                    , DISPLAY_HELP));
                 cellIndex = io.getInt();
-                io.outputText("");
             } catch(Exception e) {
                 io.outputText(String.format("Некорректный знак! Нужно выбрать номер ячейки от %d до %d.\n"
                     , MIN_CELL_INDEX
@@ -56,7 +56,9 @@ class ConsoleUI implements IGameUI {
                 io.outputText(e + "\n");
                 continue;
             }
-            if (cellIndex == DISPLAY_HELP) {
+            io.outputText("");
+
+            if (cellIndex == NUM_FOR_DISPLAY_HELP) {
                 displayHelp();
                 continue;
             }
@@ -96,15 +98,15 @@ class ConsoleUI implements IGameUI {
             }
             io.outputText("");
 
-            if (inputEnteredByPlayer == NUMBER_FOR_X) {
-                return Mark.X;
+            switch (inputEnteredByPlayer) {
+                case NUMBER_FOR_X -> { return Mark.X; }
+                case NUMBER_FOR_O -> { return Mark.O; }
+                default -> {
+                    io.outputText(String.format("Нужно выбрать либо '%d' либо '%d'.\n"
+                        , NUMBER_FOR_X
+                        , NUMBER_FOR_O));
+                }
             }
-            if (inputEnteredByPlayer == NUMBER_FOR_O) {
-                return Mark.O;
-            }
-            io.outputText(String.format("Нужно выбрать либо '%d' либо '%d'.\n"
-                , NUMBER_FOR_X
-                , NUMBER_FOR_O));
         }
     }
 
@@ -122,7 +124,6 @@ class ConsoleUI implements IGameUI {
             , 1, 2, 3
             , 4, 5, 6
             , 7, 8, 9));
-        io.outputText("");
         io.outputText("Просьба указывать номер ячейки, куда хотите сделать свой ход.\n");
         askForContinue();
     }
@@ -140,11 +141,6 @@ class ConsoleUI implements IGameUI {
         }
     }
 
-    private String getMark(int cellIndex) {
-        Mark m = field.get(cellIndex);
-        return m == null ? " " : m.toString();
-    }
-
     private void displayMove(IFieldViewer fv, Mark mark) {
         io.outputText(String.format("Сейчас ход %s:\n", mark));
         displayField(fv);
@@ -156,7 +152,11 @@ class ConsoleUI implements IGameUI {
             , getMark(0), getMark(1), getMark(2)
             , getMark(3), getMark(4), getMark(5)
             , getMark(6), getMark(7), getMark(8)));
-        io.outputText("");
+    }
+
+    private String getMark(int cellIndex) {
+        Mark m = field.get(cellIndex);
+        return m == null ? " " : m.toString();
     }
 
     private void askForContinue() {
