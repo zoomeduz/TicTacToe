@@ -33,13 +33,15 @@ class ConsoleUI implements IGameUI {
     }
 
     @Override
-    public int getCellIndex(IFieldViewer fv) {//getConsolePlayerMove?
+    public int getConsolePlayerMove(IFieldViewer fv, Mark mark) {
         final int MIN_CELL_INDEX = 1;
         final int MAX_CELL_INDEX = 9;
         final int DISPLAY_HELP   = 0;
         int cellIndex;
 
+        io.clear();
         while(true) {
+            displayMove(fv, mark);
             try {
                 io.outputText(String.format("Выберите: %d - %d, %d - показать номера ячеек\n"
                     , MIN_CELL_INDEX
@@ -56,8 +58,6 @@ class ConsoleUI implements IGameUI {
             }
             if (cellIndex == DISPLAY_HELP) {
                 displayHelp();
-                io.clear();
-                displayField(fv);
                 continue;
             }
             if (cellIndex < MIN_CELL_INDEX || cellIndex > MAX_CELL_INDEX) {
@@ -105,13 +105,9 @@ class ConsoleUI implements IGameUI {
     }
 
     @Override
-    public void displayField(IFieldViewer fv) {
-        field = fv;
-        io.outputText(String.format(fieldTemplate
-            , getMark(0), getMark(1), getMark(2)
-            , getMark(3), getMark(4), getMark(5)
-            , getMark(6), getMark(7), getMark(8)));
-        io.outputText("");
+    public void displayNonConsolePlayerMove(IFieldViewer fv, Mark mark) {
+        io.clear();
+        displayMove(fv, mark);
     }
 
     @Override
@@ -125,13 +121,6 @@ class ConsoleUI implements IGameUI {
         io.outputText("");
         io.outputText("Просьба указывать номер ячейки, куда хотите сделать свой ход.\n");
         askForContinue();
-    }
-
-    @Override
-    public void displayMove(IFieldViewer fv, Mark mark) {
-        io.clear();
-        io.outputText(String.format("Сейчас ход %s:\n", mark));
-        displayField(fv);
     }
 
     @Override
@@ -150,6 +139,20 @@ class ConsoleUI implements IGameUI {
     private String getMark(int cellIndex) {
         Mark m = field.get(cellIndex);
         return m == null ? " " : m.toString();
+    }
+
+    private void displayMove(IFieldViewer fv, Mark mark) {
+        io.outputText(String.format("Сейчас ход %s:\n", mark));
+        displayField(fv);
+    }
+
+    private void displayField(IFieldViewer fv) {
+        field = fv;
+        io.outputText(String.format(fieldTemplate
+            , getMark(0), getMark(1), getMark(2)
+            , getMark(3), getMark(4), getMark(5)
+            , getMark(6), getMark(7), getMark(8)));
+        io.outputText("");
     }
 
     private void askForContinue() {

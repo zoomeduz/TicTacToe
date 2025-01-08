@@ -19,8 +19,7 @@ class ConsolePlayer implements IPlayer {
         if (Core.getAvailCellIndexes(field).isEmpty()) {
             throw new RuntimeException("Нет доступных ячеек на поле для хода");
         }
-        ui.displayMove(field, mark);
-        return ui.getCellIndex(field);
+        return ui.getConsolePlayerMove(field, mark);
     }
 
     @Override

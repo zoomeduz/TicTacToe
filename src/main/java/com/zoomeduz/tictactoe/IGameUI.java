@@ -8,15 +8,13 @@ interface IGameUI {
 
     void displayGameStart();
 
-    int getCellIndex(IFieldViewer fv);
+    int getConsolePlayerMove(IFieldViewer fv, Mark mark);
 
     Mark getMarkForPlayer();
 
-    void displayField(IFieldViewer fv);
-
     void displayHelp();
 
-    void displayMove(IFieldViewer fv, Mark mark);
+    void displayNonConsolePlayerMove(IFieldViewer fv, Mark mark);
 
     void displayRoundResult(GameRoundResult grr);
 
